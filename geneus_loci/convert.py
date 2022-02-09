@@ -22,11 +22,11 @@ def main():
         help="Output file format")
     args = parser.parse_args()
     data_dir = Path(args.in_dir)
-    features = data_dir / "features.tsv"
-    barcodes = data_dir / "barcodes.tsv"
-    matrix   = data_dir / "data"
+    features = data_dir / "features.tsv.gz"
+    barcodes = data_dir / "barcodes.tsv.gz"
+    matrix   = data_dir / "matrix.mtx.gz"
     
-    convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer)
+    convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
 
 
 def read_features(features) -> pd.DataFrame:
