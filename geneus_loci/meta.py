@@ -71,7 +71,7 @@ def read_layout(layout='hiseq'):
     ''' read layout tsv file which contains row/col info'''
     layout_table = ''
     if layout=='hiseq':
-        layout_table = 'geneus_loci/hiseq_layout.tsv'
+        layout_table = 'config/hiseq_layout.tsv'
     return pd.read_csv(layout_table, sep='\t').set_index(['lane', 'tile'])  # type: ignore
 
 
