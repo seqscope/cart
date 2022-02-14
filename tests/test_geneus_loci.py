@@ -9,11 +9,20 @@ from geneus_loci import (
 )
 from geneus_loci.convert import (
     matrix2gdf,
-    matrix2widegdf,
     read_barcodes,
     read_features,
     read_matrix,
 )
+from geneus_loci.util import (
+    read_barcodes,
+    read_features,
+    read_matrix,
+)
+from geneus_loci.meta import (
+    # get_extent,
+    read_layout,
+)
+
 
 @pytest.fixture
 def features():
@@ -60,34 +69,47 @@ def matrix():
 
 
 def test_read_features(features):
-    df = read_features(features) 
+    df = read_features(features)
     assert len(df) == 3  # very lazy test...
 
 
 def test_read_barcodes(barcodes):
-    df = read_barcodes(barcodes) 
+    df = read_barcodes(barcodes)
     assert len(df) == 12  # very lazy test...
 
 
 def test_read_matrix(matrix):
-    df = read_matrix(matrix) 
+    df = read_matrix(matrix)
     print("\n", df)
     assert len(df) == 8  # very lazy test...
 
 
-def test_matrix2widegdf(matrix, barcodes):
-    gdf = matrix2widegdf(matrix, barcodes)
-    # print("\n", gdf)
-    # print(gdf.index)
-    # print(gdf.dtypes)
-    assert len(gdf) == 7  # very lazy test...
+# def test_matrix2widegdf(matrix, barcodes):
+    # gdf = matrix2widegdf(matrix, barcodes)
+    # # print("\n", gdf)
+    # # print(gdf.index)
+    # # print(gdf.dtypes)
+    # assert len(gdf) == 7  # very lazy test...
 
 
 def test_matrix2gdf(matrix, barcodes, features):
     '''convert matrix to long geodataframe with xy info from barcode table'''
-    
     gdf = matrix2gdf(matrix, barcodes, features)    
-    print("\n")
-    print(gdf)
-    print(gdf.dtypes)
+    # print("\n")
+    # print(gdf)
+    # print(gdf.dtypes)
     assert len(gdf) == 8
+
+
+# def test_get_extent(barcodes):
+    # df = read_barcodes(barcodes)
+    # xmin, ymin, xmax, ymax = get_extent(df)
+    # assert (xmin, ymin, xmax, ymax) == (1,1,4,3)
+
+
+def test_read_layout():
+    df = read_layout('hiseq')
+    print(df)
+    print(df.loc[(2, 2112)].row)
+
+

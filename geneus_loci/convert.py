@@ -1,80 +1,92 @@
-import io
 import argparse
 from pathlib import Path
+from multiprocessing import Pool
 
-import pandas as pd
+import yaml
 import geopandas as gpd
 
 
+from .util import (
+    read_matrix,
+    read_features,
+    read_barcodes
+)
+
 def main():
-    parser = argparse.ArgumentParser(description="Visualize tiles for SeqScope data")
+    parser = argparse.ArgumentParser(description="Convert SeqScope data to geographic format")
     parser.add_argument(
-        "-d", "--in-dir", type=str, required=True, 
+        "-d", "--in-dir", type=str, required=True,
         help="Input (STTools output) directory")
     parser.add_argument(
-        "-o", "--out", type=str, required=True, 
-        help="Output gpkg file path")
+        "-o", "--out", type=str, required=True,
+        help="Output dir")
     parser.add_argument(
-        "-l", "--layer", type=str, default="default", 
-        help="Output file layer")
-    parser.add_argument(
-        "-f", "--format", type=str, default="FlatGeobuf", 
-        help="Output file format")
+        "-lt", "--lane-tile", type=str, default="default",
+        help="lane-tile id e.g. 2-2113")
+    # parser.add_argument(
+    #     "-l", "--layer", type=str, default="default",
+    #     help="default layer")
+    # parser.add_argument(
+    #     "-f", "--format", type=str, default="GPKG",
+    #     help="Output file format")
     args = parser.parse_args()
-    data_dir = Path(args.in_dir)
+    # data_dir = Path(args.in_dir)
+    # features = data_dir / "features.tsv.gz"
+    # barcodes = data_dir / "barcodes.tsv.gz"
+    # matrix   = data_dir / "matrix.mtx.gz"
+    #
+    # convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
+    data_root = Path(args.in_dir)
+    with open(data_root/"metadata.yaml") as f:
+        metadata = yaml.safe_load(f)  
+    tiles = list(metadata['tiles'].keys())
+    args_list = map(lambda t: (t, args.out, metadata),tiles)
+    
+    with Pool(4) as p:
+        p.starmap(convert_single, args_list)
+    # convert_single(args.lane_tile, args.out, metadata)
+
+
+def convert_single(lt_id, outdir, metadata):
+    '''read metadata.yaml from data root and convert a single tile'''
+    # create outdir if not exist
+    Path(outdir).mkdir(parents=True, exist_ok=True)
+
+    # prepare data files 
+    metadata_tile = metadata['tiles'][lt_id]
+    data_dir = Path(metadata_tile['data_dir'])
     features = data_dir / "features.tsv.gz"
     barcodes = data_dir / "barcodes.tsv.gz"
     matrix   = data_dir / "matrix.mtx.gz"
-    
-    convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
+    t_srs = shifted_srs(
+            metadata_tile['false_easting'], 
+            metadata_tile['false_northing'])
+    output_path = str(Path(outdir) / f"{lt_id}.gpkg")
+    print(f"output_path:{output_path}")
+    convert2gpkg(
+        matrix, barcodes, features,
+        output=output_path,
+        t_srs=t_srs)
 
 
-def read_features(features) -> pd.DataFrame:
-    header = ['name', 'short_name', 'desc', 'gene_id', 'total_count', 'counts']
-    df = pd.read_csv(features, sep="\t", names=header).set_index("gene_id")
-    return df 
+def convert2gpkg(matrix, barcodes, features, output: str, t_srs: str):
+    '''convert dataset to gpkg'''
+    gdf = matrix2gdf(matrix, barcodes, features, t_srs)
+    gdf = gdf.drop(['barcode_id', 'gene_id'], axis=1)
+    schema = gpd.io.file.infer_schema(gdf)  # type: ignore
+    int32_fields = ['cnt_spliced', 'cnt_unspliced', 'cnt_ambiguous']
+    for f in int32_fields:
+        schema['properties'][f] = 'int32'
+    # gdf.to_file(output, layer=layer, driver=format, schema=schema, index=False)
+    gdf = gdf.to_crs('epsg:3857')  # type:ignore
+    gdf.to_file(output, layer='all', driver='GPKG', schema=schema, index=False)
+    print(f"conversion finisehd at {output}")
 
 
-def read_barcodes(barcodes) -> pd.DataFrame:
-    header = [
-        'barcode', 'barcode_id', 'col1', 'col2', 'lane', 'tile', 
-        'y', 'x', 'counts']
-    df = pd.read_csv(barcodes, sep="\t", names=header).set_index('barcode_id')
-    return df
-
-
-def read_matrix(matrix) -> pd.DataFrame:
-    header = ['gene_id', 'barcode_id', 'cnt_spliced', 'cnt_unspliced', 'cnt_ambiguous']
-    df = pd.read_csv(matrix, sep=" ", names=header, skiprows=3)
-    return df
-
-
-def matrix2widegdf(matrix, barcodes) -> gpd.GeoDataFrame:
-    '''convert matrix to wide geodataframe with xy info from barcode table
-    not used now
-    '''
-    df_matrix_long = read_matrix(matrix)
-    df_matrix_wide = (
-        df_matrix_long.groupby(
-            ['barcode_id', 'gene_id'])[['cnt_spliced', 'cnt_unspliced', 'cnt_ambiguous']]
-        .sum()
-        .unstack('gene_id', fill_value=0)
-    )
-    df_matrix_wide.columns = [
-        f"g{t[1]}_{t[0]}" for t in df_matrix_wide.columns.to_flat_index()]
-    df_barcode = read_barcodes(barcodes)[['x', 'y']]
-    df = df_barcode.merge(df_matrix_wide, on='barcode_id')
-    gdf = (gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.x, df.y))
-        .drop(['x', 'y'], axis=1)
-        .set_crs('epsg:3857')
-    )
-    return gdf
-
-
-def matrix2gdf(matrix, barcodes, features) -> gpd.GeoDataFrame:
+def matrix2gdf(matrix, barcodes, features, t_srs="epsg:3857") -> gpd.GeoDataFrame:
     '''convert matrix to long geodataframe with xy info from barcode table'''
     df_matrix = read_matrix(matrix)
-    df_feature = read_features(features)[['short_name']]
+    df_feature = read_features(features)[['gene_name']]
     df_barcode = read_barcodes(barcodes)[['x', 'y']]
     df = (df_barcode
         .merge(df_matrix, on='barcode_id')
@@ -82,15 +94,18 @@ def matrix2gdf(matrix, barcodes, features) -> gpd.GeoDataFrame:
     )
     gdf = (gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.x, df.y))
         .drop(['x', 'y'], axis=1)
-        .set_crs('epsg:3857')
+        .set_crs(t_srs)  # type: ignore
     )
+    print(gdf.dtypes)
     return gdf
 
 
-def convert2gpkg(matrix, barcodes, features, output: str, layer:str='default', format:str='FlatGeobuf'):
-    '''convert dataset to gpkg'''
-    gdf = matrix2gdf(matrix, barcodes, features) 
-    gdf.to_file(output, layer=layer, driver=format)
+def shifted_srs(false_easting, false_northing):
+    '''shifted srs for epsg:3857'''
+    proj =  '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 ' +\
+            f'+x_0={false_easting} +y_0={false_northing} ' +\
+            '+k=1 +units=m +nadgrids=@null +wktext +no_defs'
+    return proj
 
 
 if __name__ == '__main__':

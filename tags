@@ -1,0 +1,36 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Tile	geneus_loci/meta.py	/^class Tile:$/;"	c
+__init__	geneus_loci/meta.py	/^    def __init__(self, lane_id, tile_id, data_dir):$/;"	m	class:Tile
+__version__	geneus_loci/__init__.py	/^__version__ = '0.1.0'$/;"	v
+_metadata_tile	geneus_loci/meta.py	/^def _metadata_tile(lane, tile, layout):$/;"	f
+barcodes	tests/test_geneus_loci.py	/^def barcodes():$/;"	f
+convert2gpkg	geneus_loci/convert.py	/^def convert2gpkg(matrix, barcodes, features, output: str, t_srs: str):$/;"	f
+convert_single	geneus_loci/convert.py	/^def convert_single(lt_id, outdir, metadata):$/;"	f
+displayValue	viewer/index.html	/^function displayValue(value) {$/;"	f
+features	tests/test_geneus_loci.py	/^def features():$/;"	f
+grid_gap	geneus_loci/meta.py	/^    grid_gap = 20$/;"	v	class:Tile
+grid_height	geneus_loci/meta.py	/^    grid_height = 20248$/;"	v	class:Tile
+grid_width	geneus_loci/meta.py	/^    grid_width = 98666$/;"	v	class:Tile
+main	geneus_loci/convert.py	/^def main():$/;"	f
+main	geneus_loci/meta.py	/^def main():$/;"	f
+matrix	tests/test_geneus_loci.py	/^def matrix():$/;"	f
+matrix2gdf	geneus_loci/convert.py	/^def matrix2gdf(matrix, barcodes, features, t_srs="epsg:3857") -> gpd.GeoDataFrame:$/;"	f
+metadata_tiles	geneus_loci/meta.py	/^def metadata_tiles(data_root, layout):$/;"	f
+read_barcodes	geneus_loci/util.py	/^def read_barcodes(barcodes) -> pd.DataFrame:$/;"	f
+read_features	geneus_loci/util.py	/^def read_features(features) -> pd.DataFrame:$/;"	f
+read_layout	geneus_loci/meta.py	/^def read_layout(layout='hiseq'):$/;"	f
+read_matrix	geneus_loci/util.py	/^def read_matrix(matrix) -> pd.DataFrame:$/;"	f
+renderProperty	viewer/index.html	/^function renderProperty(propertyName, property) {$/;"	f
+set_extent	geneus_loci/meta.py	/^    def set_extent($/;"	m	class:Tile
+set_rowcol	geneus_loci/meta.py	/^    def set_rowcol(self, layout):$/;"	m	class:Tile
+shifted_srs	geneus_loci/convert.py	/^def shifted_srs(false_easting, false_northing):$/;"	f
+test_matrix2gdf	tests/test_geneus_loci.py	/^def test_matrix2gdf(matrix, barcodes, features):$/;"	f
+test_read_barcodes	tests/test_geneus_loci.py	/^def test_read_barcodes(barcodes):$/;"	f
+test_read_features	tests/test_geneus_loci.py	/^def test_read_features(features):$/;"	f
+test_read_layout	tests/test_geneus_loci.py	/^def test_read_layout():$/;"	f
+test_read_matrix	tests/test_geneus_loci.py	/^def test_read_matrix(matrix):$/;"	f
