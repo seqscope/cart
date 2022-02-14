@@ -1,7 +1,3 @@
-import io
-import argparse
-from pathlib import Path
-
 import pandas as pd
 
 
@@ -15,8 +11,11 @@ def read_features(features) -> pd.DataFrame:
         'total_count': 'int32',
         'counts': str
     }
-    df = pd.read_csv(features, sep="\t", names=header, dtype=dtype_dict).set_index("gene_id")
-    df = df[['gene_name']]
+    df = pd.read_csv(
+            features, sep="\t", 
+            names=header, 
+            dtype=dtype_dict).set_index("gene_id")  # type: ignore
+    df = df[['gene_name']]  # type: ignore
     return df
 
 
@@ -31,8 +30,9 @@ def read_barcodes(barcodes) -> pd.DataFrame:
         'x': 'int32',
     }
 
-    df = pd.read_csv(barcodes, sep="\t", names=header, dtype=dtype_dict).set_index('barcode_id')
-    return df
+    df = pd.read_csv(barcodes, sep="\t", names=header, 
+            dtype=dtype_dict).set_index('barcode_id')  # type: ignore
+    return df  # type: ignore
 
 
 def read_matrix(matrix) -> pd.DataFrame:
@@ -44,7 +44,7 @@ def read_matrix(matrix) -> pd.DataFrame:
         'cnt_unspliced': 'int16',
         'cnt_ambiguous': 'int16',
     }
-    df = pd.read_csv(matrix, sep=" ", names=header, skiprows=3, dtype=dtype_dict)
-    return df
-
+    df = pd.read_csv(matrix, sep=" ", names=header, 
+            skiprows=3, dtype=dtype_dict)  # type: ignore
+    return df  # type: ignore
 
