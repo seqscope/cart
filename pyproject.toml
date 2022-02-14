@@ -8,16 +8,15 @@ authors = ["Yongha Hwang <yongha.hwang@gmail.com>"]
 python = "^3.7.1"
 pandas = "1.3"
 geopandas = "^0.10.2"
-pylint = "^2.12.2"
 PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
-pylint = "^2.12.2"
-black = "^22.1.0"
-bandit = "^1.7.2"
-pynvim = "^0.4.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+meta = 'geneus_loci.meta:main'
+convert = 'geneus_loci.convert:main'

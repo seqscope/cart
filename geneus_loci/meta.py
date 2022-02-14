@@ -16,17 +16,17 @@ def main():
     parser = argparse.ArgumentParser(
         description="Create metadata for Seq-Scope dataset")
     parser.add_argument(
-        "-d", "--data-dir", type=str, required=True,
-        help="Input (STTools output) directory")
-    parser.add_argument(
         "-n", "--name", type=str, required=True,
         help="dataset name. e.g. RD2-Liver-All")
     parser.add_argument(
-        "-l", "--layout", type=str, default="hiseq",
-        help="tile layout")
+        "-d", "--data-dir", type=str, required=True,
+        help="Input (STTools output) directory")
     parser.add_argument(
         "-o", "--output", type=str, default="metadata.yaml",
         help="Output file name")
+    parser.add_argument(
+        "-l", "--layout", type=str, default="hiseq",
+        help="tile layout")
     args = parser.parse_args()
 
     metadata = {
