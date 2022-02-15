@@ -1,9 +1,12 @@
 import argparse
+from os import wait
 from pathlib import Path
 from multiprocessing import Pool
 
 import yaml
 import geopandas as gpd
+
+from osgeo import gdal
 
 
 from .util import (
@@ -106,6 +109,54 @@ def shifted_srs(false_easting, false_northing):
             f'+x_0={false_easting} +y_0={false_northing} ' +\
             '+k=1 +units=m +nadgrids=@null +wktext +no_defs'
     return proj
+
+
+def filter():
+    '''filter merged dataset with marker list'''
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-i", "--input", type=str, required=True,
+        help="Input geo file")
+    parser.add_argument(
+        "-o", "--output", type=str, required=True,
+        help="Output filtered file")
+    parser.add_argument(
+        "-m", "--marker", type=str, required=True,
+        help="marker set configuration")
+    parser.add_argument(
+        "-n", "--dataset-name", type=str, required=True,
+        help="marker set configuration")
+    args = parser.parse_args() 
+
+    with open(args.marker) as f:
+        config = yaml.safe_load(f)
+    for name, items in config['marker_sets'][args.dataset_name].items():
+        option = make_trans_options(name, items)
+        create_layer(args.input, args.output, option)
+
+
+def make_trans_options(layername, filter_items):
+    in_clause = construct_in_clause(filter_items)
+    trans_options = {
+        "format":'GPKG',
+        "layerName": layername,
+        "accessMode": 'append',
+        "where": f"gene_name in ({in_clause})"
+    }
+    return trans_options
+
+
+def create_layer(input, output, trans_options):
+    gdal.VectorTranslate(
+        output,
+        input,
+        **trans_options
+    )
+
+
+def construct_in_clause(items):
+    item_list = [i.strip() for i in items.split(',')]
+    return "'" + "','".join(item_list) + "'"
 
 
 if __name__ == '__main__':

@@ -9,15 +9,19 @@ __init__	geneus_loci/meta.py	/^    def __init__(self, lane_id, tile_id, data_dir
 __version__	geneus_loci/__init__.py	/^__version__ = '0.1.0'$/;"	v
 _metadata_tile	geneus_loci/meta.py	/^def _metadata_tile(lane, tile, layout):$/;"	f
 barcodes	tests/test_geneus_loci.py	/^def barcodes():$/;"	f
+construct_in_clause	geneus_loci/convert.py	/^def construct_in_clause(items):$/;"	f
 convert2gpkg	geneus_loci/convert.py	/^def convert2gpkg(matrix, barcodes, features, output: str, t_srs: str):$/;"	f
 convert_single	geneus_loci/convert.py	/^def convert_single(lt_id, outdir, metadata):$/;"	f
+create_layer	geneus_loci/convert.py	/^def create_layer(input, output, trans_options):$/;"	f
 displayValue	viewer/index.html	/^function displayValue(value) {$/;"	f
 features	tests/test_geneus_loci.py	/^def features():$/;"	f
+filter	geneus_loci/convert.py	/^def filter():$/;"	f
 grid_gap	geneus_loci/meta.py	/^    grid_gap = 20$/;"	v	class:Tile
 grid_height	geneus_loci/meta.py	/^    grid_height = 20248$/;"	v	class:Tile
 grid_width	geneus_loci/meta.py	/^    grid_width = 98666$/;"	v	class:Tile
 main	geneus_loci/convert.py	/^def main():$/;"	f
 main	geneus_loci/meta.py	/^def main():$/;"	f
+make_trans_options	geneus_loci/convert.py	/^def make_trans_options(layername, filter_items):$/;"	f
 matrix	tests/test_geneus_loci.py	/^def matrix():$/;"	f
 matrix2gdf	geneus_loci/convert.py	/^def matrix2gdf(matrix, barcodes, features, t_srs="epsg:3857") -> gpd.GeoDataFrame:$/;"	f
 metadata_tiles	geneus_loci/meta.py	/^def metadata_tiles(data_root, layout):$/;"	f

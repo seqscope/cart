@@ -1,0 +1,12 @@
+marker_sets:
+  RD2-Liver-All:
+    zonation: Glul, Oat, Cyp2a5, Mup9, Mup17, Cyp2c29, Cyp2e1, Mup11, Hamp, Ass1, Serpina1e, Cyp2f2, Alb, Mup20
+    Macro: Cd5l, Cd74, Clec4f, H2-Ab1, C1qb, H2-Aa, C1qc, Csf1r, Ctss, Lyz2,
+    ENDO: Aqp1, Dnase1l3, Gpr182, Gpihbp1, Kdr,
+    Hep_Injured: Saa1, Saa2, Saa3
+    HPC: Spp1, Mmp7, Clu
+    Mf-Inflamed: Cd74, H2-Ab1, H2-Aa, H2-Eb1
+    Mf_Kupffer: Cbgl, Marco, Clec4f, C1qc, C1qb, Cfp, Fcna, Csf1r, C1qa
+    HSC-A: Col3a1, Col1a1, Col1a2, Mgp, Vwf, Col6a1, Adamtsl2, Gsn, Tagln, Acta2, Serpinh1, Timp1, Gja5, Bgn, Myl9, Fstl1, Tpm2, Col6a2, Flna, Col4a1, Sparc, Vim
+  RD4-Colo-All:
+    SM: Tagln, Actg2, Myl9, Tpm2, Cnn1, Acta2
