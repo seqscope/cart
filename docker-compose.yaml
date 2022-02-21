@@ -1,0 +1,17 @@
+version: "2.3"
+services:
+  meta:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "/app/.venv/bin/python -m geneus_loci.meta"
+  convert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "/app/.venv/bin/python -m geneus_loci.convert"
+  # filter:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: "/app/.venv/bin/activate"
