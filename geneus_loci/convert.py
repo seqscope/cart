@@ -1,12 +1,13 @@
 import argparse
-from os import wait
+import os
 from pathlib import Path
 from multiprocessing import Pool
+import subprocess
 
 import yaml
 import geopandas as gpd
 
-from osgeo import gdal
+# from osgeo import gdal
 
 
 from .util import (
@@ -135,6 +136,8 @@ def filter():
 
     with open(args.marker) as f:
         config = yaml.safe_load(f)
+    if os.path.exists(args.output):
+        os.remove(args.output)
     for name, items in config['marker_sets'][args.dataset_name].items():
         option = make_trans_options(name, items)
         create_layer(args.input, args.output, option)
@@ -152,11 +155,22 @@ def make_trans_options(layername, filter_items):
 
 
 def create_layer(input, output, trans_options):
-    gdal.VectorTranslate(
-        output,
-        input,
-        **trans_options
-    )
+    '''
+    ogr2ogr filtred.gpkg  merged.gpkg \
+    -f GPKG -append -nln test \
+    -where "gene_name in ('Mup3', 'Apoa2', 'Apoc3')"
+    '''
+    # gdal.VectorTranslate(
+    #     output,
+    #     input,
+    #     **trans_options
+    # )
+    command = "ogr2ogr " +\
+        f"{output} {input} -f {trans_options['format']} " +\
+        f"-append -update -nln {trans_options['layerName']} " +\
+        f"-where \"{trans_options['where']}\""
+    print(command)
+    subprocess.call([command], shell=True)
 
 
 def construct_in_clause(items):
