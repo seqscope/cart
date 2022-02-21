@@ -24,8 +24,13 @@ def main():
         "-o", "--out", type=str, required=True,
         help="Output dir")
     parser.add_argument(
-        "-lt", "--lane-tile", type=str, default="default",
-        help="lane-tile id e.g. 2-2113")
+        "-m", "--meta", type=str, default='metadata.yaml',
+        help="Output dir")
+    parser.add_argument(
+        "-c", "--cpu", type=int, default=6,
+        help="number of processes") # parser.add_argument(
+    #     "-lt", "--lane-tile", type=str, default="default",
+    #     help="lane-tile id e.g. 2-2113")
     # parser.add_argument(
     #     "-l", "--layer", type=str, default="default",
     #     help="default layer")
@@ -40,12 +45,12 @@ def main():
     #
     # convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
     data_root = Path(args.in_dir)
-    with open(data_root/"metadata.yaml") as f:
+    with open(args.meta) as f:
         metadata = yaml.safe_load(f)  
     tiles = list(metadata['tiles'].keys())
     args_list = map(lambda t: (t, args.out, metadata),tiles)
     
-    with Pool(4) as p:
+    with Pool(args.cpu) as p:
         p.starmap(convert_single, args_list)
     # convert_single(args.lane_tile, args.out, metadata)
 

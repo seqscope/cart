@@ -8,5 +8,16 @@ marker_sets:
     Mf-Inflamed: Cd74, H2-Ab1, H2-Aa, H2-Eb1
     Mf_Kupffer: Cbgl, Marco, Clec4f, C1qc, C1qb, Cfp, Fcna, Csf1r, C1qa
     HSC-A: Col3a1, Col1a1, Col1a2, Mgp, Vwf, Col6a1, Adamtsl2, Gsn, Tagln, Acta2, Serpinh1, Timp1, Gja5, Bgn, Myl9, Fstl1, Tpm2, Col6a2, Flna, Col4a1, Sparc, Vim
-  RD4-Colo-All:
+  HD7-HLJLG-UCSD-Liver:
+    Hep_Lipo1: Mup3, Apoa2, Apoc3
+    Hep_Hamp: Hamp, Ahsg, Igfbp1, Fgb
+    Hep_PP1: Mup20
+    HPC: Spp1, Clu
+    Hep_Lipo2: Apoa4, Apoa2, Scd1, Apoc3
+    Macro: Cd74, H2-Aa, H2-Ab1, Lyz2, H2-Eb1, Ctsb, Lyz2
+    Hep_PP2: Gstm1, Alb, Gsta1, Gc
+    HSC-A: Col3a1, Col1a1, Col1a2, Igfbp7
+    Hep_inj: Saa1, Saa2
+    RBC: Hbb-bs, Hba-a1, Hba-a2
+    B_cell: Igha, Igj, Igkc
     SM: Tagln, Actg2, Myl9, Tpm2, Cnn1, Acta2

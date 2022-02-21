@@ -44,7 +44,14 @@ def read_matrix(matrix) -> pd.DataFrame:
         'cnt_unspliced': 'int16',
         'cnt_ambiguous': 'int16',
     }
-    df = pd.read_csv(matrix, sep=" ", names=header, 
-            skiprows=3, dtype=dtype_dict)  # type: ignore
-    return df  # type: ignore
+    df = pd.read_csv(   
+        matrix, 
+        sep=" ", names=header, 
+        skiprows=3, dtype=dtype_dict)   # type: pandas:DataFrame
+    df['cnt_total'] =  (
+        df['cnt_spliced'] + \
+        df['cnt_unspliced'] + \
+        df['cnt_ambiguous']).astype('int16')   
+    
+    return df  
 

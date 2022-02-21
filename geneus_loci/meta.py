@@ -27,6 +27,9 @@ def main():
     parser.add_argument(
         "-l", "--layout", type=str, default="hiseq",
         help="tile layout")
+    parser.add_argument(
+        "-g", "--gap", type=int, default=0,
+        help="tile layout")
     args = parser.parse_args()
 
     metadata = {
@@ -35,11 +38,24 @@ def main():
         'tiles': [],
     }
     layout = read_layout(args.layout)
-    metadata['tiles'] = metadata_tiles(args.data_dir, layout)
+    tiles = extract_metadata_tiles(args.data_dir, layout)
+    Tile.grid_width, Tile.grid_height = identify_tile_size(tiles)
+    Tile.grid_gap = args.gap
+    Tile.max_row = int(layout['row'].max())
+    print(f"Grid width: {Tile.grid_width}, height: {Tile.grid_height}")
+    
+    for _, tile in tiles.items():
+        tile.set_false_origin()
+
+    # required for pyyaml tag issue
+    tile_dict = {key:tile.__dict__ for key, tile in tiles.items()}
+
+    metadata['tiles'] = tile_dict 
     metadata['number_of_tiles'] = len(metadata['tiles']) 
-    metadata['list_of_tiles'] = sorted(list(metadata['tiles'].keys())) 
+    metadata['list_of_tiles'] = sorted(list(tile_dict.keys())) 
     metadata['tile_layout'] = {
         'scheme': args.layout,
+        'max_row': Tile.max_row,
         'grid_gap': Tile.grid_gap,
         'grid_width': Tile.grid_width,
         'grid_height': Tile.grid_height
@@ -48,7 +64,27 @@ def main():
         yaml.dump(metadata, file)
 
 
-def metadata_tiles(data_root, layout):
+def identify_tile_size(tiles):
+    ''' 
+    infer tile width and height
+    width = max(xmax-xmin)
+    height = max(ymax-ymin) '''
+
+    width_max = 0
+    height_max = 0
+
+    for _, tile in tiles.items():
+        width = tile.xmax - tile.xmin
+        height = tile.ymax - tile.ymin
+        if width > width_max: 
+            width_max = width 
+        if  height > height_max: 
+            height_max = height 
+        
+    return width_max, height_max
+
+
+def extract_metadata_tiles(data_root, layout):
     ''' loop over data dir and append metadat for each tile'''
     metadata_tiles = {} 
     for lane in Path(data_root).iterdir():
@@ -62,9 +98,9 @@ def metadata_tiles(data_root, layout):
 
 def _metadata_tile(lane, tile, layout):
     tile = Tile(int(lane.stem), int(tile.stem), str(tile))
-    tile.set_rowcol(layout)
-    tile.set_extent()
-    return tile.__dict__
+    tile.get_rowcol(layout)
+    tile.get_extent()
+    return tile
 
 
 def read_layout(layout='hiseq'):
@@ -77,35 +113,46 @@ def read_layout(layout='hiseq'):
 
 class Tile:
     ''' class for tile metadata'''
-    grid_gap = 20
-    grid_width = 98666
-    grid_height = 20248
+    grid_gap = 0
+    grid_width = 0
+    grid_height = 0 
+    max_row = 0
 
     def __init__(self, lane_id, tile_id, data_dir):
         self.lane_id = lane_id
         self.tile_id = tile_id
         self.data_dir = data_dir
 
-        self.row = None
-        self.col = None
+        self.row = 0 
+        self.col = 0 
         self.false_easting = None
         self.false_northing = None
 
-        self.xmin = 0
-        self.ymin = 0
-        self.xmax = 0
-        self.ymax = 0
+        self.xmin: int = 0
+        self.ymin: int = 0
+        self.xmax: int = 0
+        self.ymax: int = 0
 
 
-    def set_rowcol(self, layout):
+    def get_rowcol(self, layout):
         """ get row/col of a tile"""
         self.row = int(layout.loc[(self.lane_id, self.tile_id)].row)
         self.col = int(layout.loc[(self.lane_id, self.tile_id)].col)
-        self.false_easting = -int((Tile.grid_width + Tile.grid_gap) * self.col)
-        self.false_northing = int((Tile.grid_height + Tile.grid_gap) * self.row)
 
 
-    def set_extent(
+    def set_false_origin(self):
+        '''
+        location of local origin compared to global origin
+        global origin is set to the tile at (max_row, 1)'s local origin
+        '''
+        self.false_easting = -int((Tile.grid_width + Tile.grid_gap) * (self.col - 1))
+        self.false_northing = -int(
+            (Tile.grid_height + Tile.grid_gap) * \
+            (Tile.max_row - self.row )
+        )
+
+
+    def get_extent(
         self, barcode_file = 'barcodes.tsv.gz',
         x='x', y='y'):  # pylint: disable=invalid-name
 
