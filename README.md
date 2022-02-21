@@ -3,8 +3,10 @@
 [Poetry](https://python-poetry.org/) helps setting up virtual env and installation.
 
 ```
+$ module load python/3.9.1 gdal
 $ poetry shell
 $ poetry install
+$ meta
 ```
 
 
@@ -63,7 +65,7 @@ use -igor instead of -combined for lighter relief
 generate vector tiles with tippecanoe
 
 ```
-$ tippecanoe  -o tip-o1m.mbtiles -z14 -Z9  -pd  -M 2000000 -O 1000000 liver.geojson -s EPSG:3857
+$ tippecanoe  -o vectortile.mbtiles -z14 -Z9  -pd  -M 2000000 -O 1000000 input.geojson -s EPSG:3857
 ```
 
 

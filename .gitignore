@@ -1,6 +1,7 @@
 data/*
 .vim
 tags
+.tool-versions
 # python
 
 # Byte-compiled / optimized / DLL files
