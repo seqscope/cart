@@ -30,10 +30,12 @@ converts all tiles to geospatial format with correct CRS
 convert -d /data/dir -o /output/dir -m /path/to/metadata.yaml --cpu=4 
 ```
 
-merge all tiles to one single geospatial file's one merged layer named 'all'
+merge all tiles to one single geospatial file's one merged layer named 'all'. Since gdal module in greatlakes doesn't have ogrmerge.py, we need to use gdal container.
 
 ```
-find data/geospatial -type f -print0 | xargs -r0 ogrmerge.py -o data/geospatial/merged.gpkg -f GPKG -progress -single -nln all   
+$ module load singularity
+$ singularity pull docker://osgeo/gdal:alpine-normal-latest
+$ find data/geospatial -type f -print0 | xargs -r0 singularity exec gdalimage.simg ogrmerge.py -o data/geospatial/merged.gpkg -f GPKG -progress -single -nln all   
 ```
 
 
