@@ -18,9 +18,9 @@ from .util import (
 
 def main():
     parser = argparse.ArgumentParser(description="Convert SeqScope data to geographic format")
-    parser.add_argument(
-        "-d", "--in-dir", type=str, required=True,
-        help="Input (STTools output) directory")
+    # parser.add_argument(
+    #     "-d", "--in-dir", type=str, required=True,
+    #     help="Input (STTools output) directory")
     parser.add_argument(
         "-o", "--out", type=str, required=True,
         help="Output dir")
@@ -45,7 +45,7 @@ def main():
     # matrix   = data_dir / "matrix.mtx.gz"
     #
     # convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
-    data_root = Path(args.in_dir)
+    # data_root = Path(args.in_dir)
     with open(args.meta) as f:
         metadata = yaml.safe_load(f)  
     tiles = list(metadata['tiles'].keys())
@@ -132,6 +132,9 @@ def filter():
     parser.add_argument(
         "-n", "--dataset-name", type=str, required=True,
         help="marker set configuration")
+    parser.add_argument(
+        "-s", "--singularity", type=str, default=None,
+        help="singularity image")
     args = parser.parse_args() 
 
     with open(args.marker) as f:
@@ -139,17 +142,18 @@ def filter():
     if os.path.exists(args.output):
         os.remove(args.output)
     for name, items in config['marker_sets'][args.dataset_name].items():
-        option = make_trans_options(name, items)
+        option = make_trans_options(name, items, args.singularity)
         create_layer(args.input, args.output, option)
 
 
-def make_trans_options(layername, filter_items):
+def make_trans_options(layername, filter_items, singularity):
     in_clause = construct_in_clause(filter_items)
     trans_options = {
         "format":'GPKG',
         "layerName": layername,
         "accessMode": 'append',
-        "where": f"gene_name in ({in_clause})"
+        "where": f"gene_name in ({in_clause})",
+        "singularity": singularity 
     }
     return trans_options
 
@@ -165,7 +169,10 @@ def create_layer(input, output, trans_options):
     #     input,
     #     **trans_options
     # )
-    command = "ogr2ogr " +\
+    executor = 'ogr2ogr'
+    if trans_options['singularity']:
+        executor = f"singularity exec {trans_options['singularity']} ogr2ogr"
+    command = f"{executor} " +\
         f"{output} {input} -f {trans_options['format']} " +\
         f"-append -update -nln {trans_options['layerName']} " +\
         f"-where \"{trans_options['where']}\""
