@@ -24,11 +24,16 @@ false_easting or northing dictates where the world coordinate systems origin is 
 
 ## convert to geospatial format 
 
+
+### piecewise conversion
+
 converts all tiles to geospatial format with correct CRS
 
 ```
 convert -d /data/dir -o /output/dir -m /path/to/metadata.yaml --cpu=4 
 ```
+
+### merge tiles
 
 merge all tiles to one single geospatial file's one merged layer named 'all'. Since gdal module in greatlakes doesn't have ogrmerge.py, we need to use gdal container.
 
@@ -36,6 +41,12 @@ merge all tiles to one single geospatial file's one merged layer named 'all'. Si
 $ module load singularity
 $ singularity pull docker://osgeo/gdal:alpine-normal-latest
 $ find data/geospatial -type f -print0 | xargs -r0 singularity exec gdalimage.simg ogrmerge.py -o data/geospatial/merged.gpkg -f GPKG -progress -single -nln all   
+```
+
+### filter dataset with markers
+
+```
+$ filter -i merged.gpkg -o filtered.gpkg -m markers.yaml -n DATASET_NAME_IN_MARKER_YAML
 ```
 
 
