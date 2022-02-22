@@ -25,7 +25,10 @@ def main():
         "-o", "--output", type=str, default="metadata.yaml",
         help="Output file name")
     parser.add_argument(
-        "-l", "--layout", type=str, default="hiseq",
+        "-l", "--lane", type=int, default=0,
+        help="lane number 1 or 2. 0 for all")
+    parser.add_argument(
+        "-y", "--layout", type=str, default="hiseq",
         help="tile layout")
     parser.add_argument(
         "-g", "--gap", type=int, default=0,
@@ -38,7 +41,7 @@ def main():
         'tiles': [],
     }
     layout = read_layout(args.layout)
-    tiles = extract_metadata_tiles(args.data_dir, layout)
+    tiles = extract_metadata_tiles(args.data_dir, layout, lane_arg=args.lane)
     Tile.grid_width, Tile.grid_height = identify_tile_size(tiles)
     Tile.grid_gap = args.gap
     Tile.max_row = int(layout['row'].max())
@@ -84,11 +87,14 @@ def identify_tile_size(tiles):
     return width_max, height_max
 
 
-def extract_metadata_tiles(data_root, layout):
+def extract_metadata_tiles(data_root, layout, lane_arg=0):
     ''' loop over data dir and append metadat for each tile'''
     metadata_tiles = {} 
+    lanes = [1, 2]
+    if lane_arg != 0:
+        lanes = [lane_arg]
     for lane in Path(data_root).iterdir():
-        if lane.is_dir():
+        if lane.is_dir() and (int(lane.stem) in lanes):
             for tile in lane.iterdir():
                 if tile.is_dir():
                     metadata_tiles[f"{lane.stem}-{tile.stem}"] =\
