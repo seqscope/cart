@@ -1,0 +1,47 @@
+[
+  {
+    "display": true,
+    "id": "B_cell",
+    "color": "#4e79a7"
+  },
+  {
+    "display": true,
+    "id": "Colonocyte",
+    "color": "#F28e2b"
+  },
+  {
+    "display": false,
+    "id": "EEC",
+    "color": "#e15759"
+  },
+  {
+    "display": false,
+    "id": "Fibro",
+    "color": "#76b7b2"
+  },
+  {
+    "display": false,
+    "id": "Goblet",
+    "color": "#59a14f"
+  },
+  {
+    "display": false,
+    "id": "Injury",
+    "color": "#edc948"
+  },
+  {
+    "display": false,
+    "id": "Macro",
+    "color": "#b07aa1"
+  },
+  {
+    "display": false,
+    "id": "Neuronal",
+    "color": "#ff9da7"
+  },
+  {
+    "display": false,
+    "id": "SM",
+    "color": "#9c755f"
+  }
+]
