@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
+import proj4 from 'proj4';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css'
 
@@ -9,6 +10,7 @@ import MarkerList from "./MarkerList";
 import Background from './Background';
 import DotControl from './DotControl';
 import Tooltip from './Tooltip';
+import FgbDownload from './FgbDownload';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWhnbm95IiwiYSI6ImZIcGRiZjgifQ.pL1SaB8gHyl-L2yolSl5Qw';
 
@@ -17,13 +19,22 @@ export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }));
+  const x0 = 24.8600;
+  const y0 = 0.2006;
+  const [lng, setLng] = useState(x0);
+  const [lat, setLat] = useState(y0);
+  const xy0 = proj4("EPSG:4326", "EPSG:3857").forward({
+    x: x0,
+    y: y0
+  });
 
-  const [lng, setLng] = useState(24.8600);
-  const [lat, setLat] = useState(0.2006);
+  const [x, setX] = useState(xy0.x.toFixed(1));
+  const [y, setY] = useState(xy0.y.toFixed(1));
   const [zoom, setZoom] = useState(12.00);
   const [markerList, setMarkerList] = useState(markers);
   const [bgOpacity, setBgOpacity] = useState(0.5);
   const [circleSize, setCircleSize] = useState(150);
+  const [deepFeatures, setDeepFeatures] = useState({});
 
   useEffect(() => {
     if (map.current) return;
@@ -80,26 +91,21 @@ export default function Map() {
   useEffect(() => {
     if (!map.current) return;
     map.current.on('move', () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
+      setLng(map.current.getCenter().lng.toFixed(6));
+      setLat(map.current.getCenter().lat.toFixed(6));
       setZoom(map.current.getZoom().toFixed(2));
+      const xy = proj4("EPSG:4326", "EPSG:3857").forward({
+        x: map.current.getCenter().lng,
+        y: map.current.getCenter().lat
+      });
+      setX(xy.x.toFixed(1));
+      setY(xy.y.toFixed(1));
     });
   });
 
   //tooltip
   useEffect(() => {
     if (!map.current) return;
-    // map.current.on('mouseenter', e => {
-    //   if (e.features.length) {
-    //     console.log(e);
-    //     map.current.getCanvas().style.cursor = 'pointer';
-    //   }
-    // });
-    // // reset cursor to default when user is no longer hovering over a clickable feature
-    // map.current.on('mouseleave', () => {
-    //   map.current.getCanvas().style.cursor = '';
-    // });
-
     // add tooltip when users mouse move over a point
     map.current.on('click', e => {
       const features = map.current.queryRenderedFeatures(e.point);
@@ -171,19 +177,30 @@ export default function Map() {
     });
   };
 
+  const handleFgbClick = () => {
+    return { x: x, y: y }
+  }
+  const fgbCallback = (features) => {
+    setDeepFeatures(features);
+    console.log("parent", features);
+  }
 
   return (
     <div className="map-wrap">
       <div className="sidebar">
         <h1 className="heading">SeqScope</h1>
-        <div>X:{lng}|Y:{lat}|Zoom:{zoom}</div>
+        {/* <div>X:{lng}|Y:{lat}|Zoom:{zoom}</div> */}
+        <div>X:{x}|Y:{y}|Zoom:{zoom}</div>
         <hr />
         <MarkerList markerList={markerList} handleToggle={handleMarkerToggle} />
         <hr />
         <Background value={bgOpacity} handleChange={handleBgChange} />
         <hr />
         <DotControl value={circleSize} handleChange={handleCircleSize} />
-
+        <hr />
+        <FgbDownload handleClick={handleFgbClick} callback={fgbCallback} />
+        <hr />
+        deep features {deepFeatures.length}
       </div>
       <div ref={mapContainer} className="map" />
     </div>
