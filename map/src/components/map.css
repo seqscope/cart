@@ -17,8 +17,11 @@
 }
 
 .marker {
+  list-style-type: square;
+  font-weight: bolder ;
   cursor: pointer;
   text-align: left;
+  margin-left: 15px;
 }
 .tooltip li {
   text-align: left;
