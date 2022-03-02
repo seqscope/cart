@@ -34,9 +34,11 @@ export default function Map() {
   const [markerList, setMarkerList] = useState(markers);
   const [bgOpacity, setBgOpacity] = useState(0.5);
   const [circleSize, setCircleSize] = useState(150);
-  const [deepFeatures, setDeepFeatures] = useState({});
+  const [deepFeatures, setDeepFeatures] = useState([]);
+  const deepFeaturesRef = useRef(deepFeatures);
 
   useEffect(() => {
+    // initial load
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -44,12 +46,9 @@ export default function Map() {
       center: [lng, lat],
       zoom: zoom
     });
-  });
 
-  useEffect(() => {
-    if (!map.current) return;
+    // add sources and layers
     map.current.on('load', () => {
-
       // add base map
       map.current.addSource('basemap', {
         type: 'raster',
@@ -74,6 +73,35 @@ export default function Map() {
       markers.map(x => addLayer(map.current, x.id, x.color));
 
     });
+
+    // coordinate display
+    map.current.on('move', () => {
+      setLng(map.current.getCenter().lng.toFixed(6));
+      setLat(map.current.getCenter().lat.toFixed(6));
+      setZoom(map.current.getZoom().toFixed(2));
+      const xy = proj4("EPSG:4326", "EPSG:3857").forward({
+        x: map.current.getCenter().lng,
+        y: map.current.getCenter().lat
+      });
+      setX(xy.x.toFixed(1));
+      setY(xy.y.toFixed(1));
+    });
+
+    // tooltip
+    map.current.on('click', e => {
+      const features = map.current.queryRenderedFeatures(e.point);
+      if (features.length) {
+        const feature = features[0];
+        // Create tooltip node
+        const tooltipNode = document.createElement('div');
+        ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
+        // Set tooltip on map
+        tooltipRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(tooltipNode)
+          .addTo(map.current);
+      }
+    });
   });
 
   useEffect(() => {
@@ -88,42 +116,6 @@ export default function Map() {
     });
   });
 
-  useEffect(() => {
-    if (!map.current) return;
-    map.current.on('move', () => {
-      setLng(map.current.getCenter().lng.toFixed(6));
-      setLat(map.current.getCenter().lat.toFixed(6));
-      setZoom(map.current.getZoom().toFixed(2));
-      const xy = proj4("EPSG:4326", "EPSG:3857").forward({
-        x: map.current.getCenter().lng,
-        y: map.current.getCenter().lat
-      });
-      setX(xy.x.toFixed(1));
-      setY(xy.y.toFixed(1));
-    });
-  });
-
-  //tooltip
-  useEffect(() => {
-    if (!map.current) return;
-    // add tooltip when users mouse move over a point
-    map.current.on('click', e => {
-      const features = map.current.queryRenderedFeatures(e.point);
-      if (features.length) {
-        const feature = features[0];
-
-        // Create tooltip node
-        const tooltipNode = document.createElement('div');
-        ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
-
-        // Set tooltip on map
-        tooltipRef.current
-          .setLngLat(e.lngLat)
-          .setDOMContent(tooltipNode)
-          .addTo(map.current);
-      }
-    });
-  });
 
   const handleMarkerToggle = (id) => {
     let mapped = markerList.map(loc => {
@@ -137,7 +129,7 @@ export default function Map() {
   }
   const handleCircleSize = (value) => {
     markers.map(x => {
-      addLayer(map.current, x.id, x.color);
+      // addLayer(map.current, x.id, x.color);
       map.current.setPaintProperty(
         `l-mark-${x.id}`,
         'circle-radius',
@@ -156,7 +148,6 @@ export default function Map() {
       'maxzoom': 15
     });
   };
-
   const addLayer = (m, gene, color) => {
     m.addLayer({
       'id': 'l-mark-' + gene,
@@ -178,12 +169,12 @@ export default function Map() {
   };
 
   const handleFgbClick = () => {
-    return { x: x, y: y }
+    return { x: x, y: y, map: map.current }
   }
-  const fgbCallback = (features) => {
-    setDeepFeatures(features);
-    console.log("parent", features);
-  }
+  // const fgbCallback = (features) => {
+  //   deepFeaturesRef.current = features;
+  //   console.log("parent", features);
+  // }
 
   return (
     <div className="map-wrap">
@@ -198,9 +189,10 @@ export default function Map() {
         <hr />
         <DotControl value={circleSize} handleChange={handleCircleSize} />
         <hr />
-        <FgbDownload handleClick={handleFgbClick} callback={fgbCallback} />
-        <hr />
-        deep features {deepFeatures.length}
+        <FgbDownload
+          handleClick={handleFgbClick}
+        // callback={fgbCallback}
+        />
       </div>
       <div ref={mapContainer} className="map" />
     </div>
