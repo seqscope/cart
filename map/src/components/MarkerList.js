@@ -13,7 +13,12 @@ const Marker = ({ marker, handleToggle }) => {
       onClick={handleClick}
       className={marker.display ? "marker" : "strike marker"}
     >
-      {marker.id}
+      <li> {marker.id} </li>
+      <div>
+        {marker.genes.map((gene) => {
+          return <button>{gene}</button>
+        })}
+      </div>
     </div>
   )
 }
