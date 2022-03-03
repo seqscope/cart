@@ -34,8 +34,6 @@ export default function Map() {
   const [markerList, setMarkerList] = useState(markers);
   const [bgOpacity, setBgOpacity] = useState(0.5);
   const [circleSize, setCircleSize] = useState(150);
-  const [deepFeatures, setDeepFeatures] = useState([]);
-  const deepFeaturesRef = useRef(deepFeatures);
 
   useEffect(() => {
     // initial load
@@ -168,14 +166,6 @@ export default function Map() {
     });
   };
 
-  const handleFgbClick = () => {
-    return { x: x, y: y, map: map.current }
-  }
-  // const fgbCallback = (features) => {
-  //   deepFeaturesRef.current = features;
-  //   console.log("parent", features);
-  // }
-
   return (
     <div className="map-wrap">
       <div className="sidebar">
@@ -190,7 +180,10 @@ export default function Map() {
         <DotControl value={circleSize} handleChange={handleCircleSize} />
         <hr />
         <FgbDownload
-          handleClick={handleFgbClick}
+          // handleClick={handleFgbClick}
+          x={x}
+          y={y}
+          map={map.current}
         // callback={fgbCallback}
         />
       </div>

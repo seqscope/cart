@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { geojson } from "flatgeobuf";
 import proj4 from 'proj4';
 
-const FgbDownload = ({ handleClick }) => {
+const FgbDownload = ({ x: x_parent, y: y_parent, map: map_parent }) => {
   const [features, setFeatures] = useState([]);
-  const [map, setMap] = useState(null);
-  const [xc, setXc] = useState(0);
-  const [yc, setYc] = useState(0);
+  const [map, setMap] = useState(map_parent);
+  const [xc, setXc] = useState(x_parent);
+  const [yc, setYc] = useState(y_parent);
   const [range, setRange] = useState(2500);
 
   const fgb_src = "https://seqscope-web-test.s3.amazonaws.com/flatgeobuf/merged.fgb";
 
+  useEffect(() => {
+    setXc(x_parent);
+    setYc(y_parent);
+    setMap(map_parent);
+  }, [x_parent, y_parent, map_parent]);
+
   const onClick = () => {
-    const xy = handleClick();
-    setXc(xy.x);
-    setYc(xy.y);
-    setMap(xy.map);
     const bounds = {
       maxX: xc + range,
       maxY: yc + range,
@@ -58,8 +60,7 @@ const FgbDownload = ({ handleClick }) => {
     });
   };
 
-  let loadFGB = async (fgb_src, bounds) => {
-    console.log("loadFGB");
+  const loadFGB = async (fgb_src, bounds) => {
     const iter = geojson.deserialize(
       fgb_src,
       bounds,
@@ -87,20 +88,15 @@ const FgbDownload = ({ handleClick }) => {
     setFeatures([]);
   };
 
-  // const handleHeaderMeta = (headerMeta) => {
-  //   console.log(headerMeta)
-  // }
-
   return (
     <div>
-      {/* <label>Full Genes (count {features.length})</label> */}
-      <div>xc:{xc}|yc:{yc}</div>
+      <p>Full data download (at the center of the screen)</p>
       <input
         onClick={onClick}
         type="button"
-        value="FGB"
+        value="Donwload Dataset"
       ></input>
-      <div>identified genes: {features.length}</div>
+      <p>identified data points: {features.length}</p>
       <input
         onClick={draw}
         type="button"

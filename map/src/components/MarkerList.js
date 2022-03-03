@@ -16,7 +16,7 @@ const Marker = ({ marker, handleToggle }) => {
       <li> {marker.id} </li>
       <div>
         {marker.genes.map((gene) => {
-          return <button>{gene}</button>
+          return <button key={gene}>{gene}</button>
         })}
       </div>
     </div>
