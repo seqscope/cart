@@ -16,7 +16,7 @@
 
 echo 'started'
 
-export STHOME=/home/yonghah/repo/geneus_loci
+export STHOME=/home/yonghah/repo/cart
 export DATASET=HD30-HML22-InCol
 export CONTAINER=~/simg/gdal_alpine-normal-latest.sif 
 # export STDATA=/scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-HML22-InCol

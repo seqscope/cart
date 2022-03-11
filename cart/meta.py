@@ -44,7 +44,7 @@ def main():
     tiles = extract_metadata_tiles(args.data_dir, layout, lane_arg=args.lane)
     Tile.grid_width, Tile.grid_height = identify_tile_size(tiles)
     Tile.grid_gap = args.gap
-    Tile.max_row = int(layout['row'].max())
+    Tile.max_row = int(layout['row'].max())   # type: ignore
     print(f"Grid width: {Tile.grid_width}, height: {Tile.grid_height}")
     
     for _, tile in tiles.items():

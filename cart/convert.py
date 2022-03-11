@@ -18,9 +18,6 @@ from .util import (
 
 def main():
     parser = argparse.ArgumentParser(description="Convert SeqScope data to geographic format")
-    # parser.add_argument(
-    #     "-d", "--in-dir", type=str, required=True,
-    #     help="Input (STTools output) directory")
     parser.add_argument(
         "-o", "--out", type=str, required=True,
         help="Output dir")
@@ -29,23 +26,8 @@ def main():
         help="Output dir")
     parser.add_argument(
         "-c", "--cpu", type=int, default=6,
-        help="number of processes") # parser.add_argument(
-    #     "-lt", "--lane-tile", type=str, default="default",
-    #     help="lane-tile id e.g. 2-2113")
-    # parser.add_argument(
-    #     "-l", "--layer", type=str, default="default",
-    #     help="default layer")
-    # parser.add_argument(
-    #     "-f", "--format", type=str, default="GPKG",
-    #     help="Output file format")
+        help="number of processes") 
     args = parser.parse_args()
-    # data_dir = Path(args.in_dir)
-    # features = data_dir / "features.tsv.gz"
-    # barcodes = data_dir / "barcodes.tsv.gz"
-    # matrix   = data_dir / "matrix.mtx.gz"
-    #
-    # convert2gpkg(matrix, barcodes, features, output=args.out, layer=args.layer, format=args.format)
-    # data_root = Path(args.in_dir)
     with open(args.meta) as f:
         metadata = yaml.safe_load(f)  
     tiles = list(metadata['tiles'].keys())
@@ -53,7 +35,6 @@ def main():
     
     with Pool(args.cpu) as p:
         p.starmap(convert_single, args_list)
-    # convert_single(args.lane_tile, args.out, metadata)
 
 
 def convert_single(lt_id, outdir, metadata):
@@ -164,11 +145,6 @@ def create_layer(input, output, trans_options):
     -f GPKG -append -nln test \
     -where "gene_name in ('Mup3', 'Apoa2', 'Apoc3')"
     '''
-    # gdal.VectorTranslate(
-    #     output,
-    #     input,
-    #     **trans_options
-    # )
     executor = 'ogr2ogr'
     if trans_options['singularity']:
         executor = f"singularity exec {trans_options['singularity']} ogr2ogr"

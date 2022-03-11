@@ -4,21 +4,21 @@ import pytest
 import pandas as pd
 import geopandas as gpd
 
-from geneus_loci import (
+from cart import (
     __version__,
 )
-from geneus_loci.convert import (
+from cart.convert import (
     matrix2gdf,
     read_barcodes,
     read_features,
     read_matrix,
 )
-from geneus_loci.util import (
+from cart.util import (
     read_barcodes,
     read_features,
     read_matrix,
 )
-from geneus_loci.meta import (
+from cart.meta import (
     # get_extent,
     read_layout,
 )

@@ -1,3 +1,4 @@
+# type: ignore
 import pandas as pd
 
 
@@ -12,9 +13,9 @@ def read_features(features) -> pd.DataFrame:
         'counts': str
     }
     df = pd.read_csv(
-            features, sep="\t", 
-            names=header, 
-            dtype=dtype_dict).set_index("gene_id")  # type: ignore
+        features, sep="\t",
+        names=header,
+        dtype=dtype_dict).set_index("gene_id")
     df = df[['gene_name']]  # type: ignore
     return df
 
@@ -30,8 +31,8 @@ def read_barcodes(barcodes) -> pd.DataFrame:
         'x': 'int32',
     }
 
-    df = pd.read_csv(barcodes, sep="\t", names=header, 
-            dtype=dtype_dict).set_index('barcode_id')  # type: ignore
+    df = pd.read_csv(barcodes, sep="\t", names=header,
+            dtype=dtype_dict).set_index('barcode_id')
     return df  # type: ignore
 
 
@@ -46,8 +47,8 @@ def read_matrix(matrix) -> pd.DataFrame:
     }
     df = pd.read_csv(   
         matrix, 
-        sep=" ", names=header, 
-        skiprows=3, dtype=dtype_dict)   # type: pandas:DataFrame
+        sep=" ", names=header,
+        skiprows=3, dtype=dtype_dict)
     df['cnt_total'] =  (
         df['cnt_spliced'] + \
         df['cnt_unspliced'] + \

@@ -1,3 +1,7 @@
+# Cart
+
+tools for CartoSeq including metatdata generation, file converstion, and raster plotting.
+
 ## set up
 
 [Poetry](https://python-poetry.org/) helps setting up virtual env and installation.
