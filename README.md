@@ -65,7 +65,8 @@ gdal_rasterize -a cnt_total -add -l all -tr 30 30  merged.gpkg merged-tr30.tif
 create tiff with selected genes
 ```
 gdal_rasterize -a cnt_total -add -l all -tr 200 200 -where "gene_name in ('Hbb-bs','Hba-a1','Hba-a2')" merged.gpkg Hep_RBC-tr200.tiff
-`
+```
+
 Create a hillshade
 
 ```
@@ -77,13 +78,8 @@ use -igor instead of -combined for lighter relief
 
 ## Misc notes
 
-``
 
 generate vector tiles with tippecanoe
-
 ```
 $ tippecanoe  -o vectortile.mbtiles -z14 -Z9  -pd  -M 2000000 -O 1000000 input.geojson -s EPSG:3857
 ```
-
-
-
