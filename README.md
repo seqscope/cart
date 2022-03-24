@@ -39,7 +39,7 @@ convert -d /data/dir -o /output/dir -m /path/to/metadata.yaml --cpu=4
 
 ### merge tiles
 
-merge all tiles to one single geospatial file's one merged layer named 'all'. Since gdal module in greatlakes doesn't have ogrmerge.py, we need to use gdal container.
+merge converted geopatial files per tile into one single geospatial file (layer name 'all'). We need to use gdal container since gdal module in greatlakes doesn't have ogrmerge.py strangely.
 
 ```
 $ module load singularity
