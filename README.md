@@ -4,6 +4,11 @@ tools for CartoSeq including metatdata generation, file converstion, and raster 
 
 ## set up
 
+```
+pip install "git+https://github.com/seqscope/cart.git@latest"
+```
+
+### for developers
 [Poetry](https://python-poetry.org/) helps setting up virtual env and installation.
 
 ```
