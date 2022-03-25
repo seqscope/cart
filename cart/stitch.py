@@ -29,8 +29,7 @@ def stitch(image_paths, output):
     stitcher = cv2.Stitcher.create(cv2.Stitcher_SCANS)
     status, stitched = stitcher.stitch(images)
     print(status)
-    if status == 0:
-        cv2.imwrite(output, stitched)
+    cv2.imwrite(output, stitched)
 
 if __name__=='__main__':
     main()
