@@ -1,0 +1,843 @@
+data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb
+dataset: HD30-HML22-InCol
+list_of_tiles:
+- 2-1101
+- 2-1102
+- 2-1103
+- 2-1104
+- 2-1105
+- 2-1106
+- 2-1107
+- 2-1108
+- 2-1109
+- 2-1110
+- 2-1111
+- 2-1112
+- 2-1113
+- 2-1114
+- 2-1115
+- 2-1116
+- 2-1201
+- 2-1202
+- 2-1203
+- 2-1204
+- 2-1205
+- 2-1206
+- 2-1207
+- 2-1208
+- 2-1209
+- 2-1210
+- 2-1211
+- 2-1212
+- 2-1213
+- 2-1214
+- 2-1215
+- 2-1216
+- 2-2101
+- 2-2102
+- 2-2103
+- 2-2104
+- 2-2105
+- 2-2106
+- 2-2107
+- 2-2108
+- 2-2109
+- 2-2110
+- 2-2111
+- 2-2112
+- 2-2113
+- 2-2114
+- 2-2115
+- 2-2116
+- 2-2201
+- 2-2202
+- 2-2203
+- 2-2204
+- 2-2205
+- 2-2206
+- 2-2207
+- 2-2208
+- 2-2209
+- 2-2210
+- 2-2211
+- 2-2212
+- 2-2213
+- 2-2214
+- 2-2215
+- 2-2216
+number_of_tiles: 64
+tile_layout:
+  grid_gap: 0
+  grid_height: 20299
+  grid_width: 98749
+  max_row: 4
+  scheme: hiseq
+tiles:
+  2-1101:
+    col: 1
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1101
+    false_easting: 0
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1101
+    xmax: 100247
+    xmin: 3506
+    ymax: 21321
+    ymin: 1274
+  2-1102:
+    col: 2
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1102
+    false_easting: -98749
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1102
+    xmax: 100775
+    xmin: 2547
+    ymax: 21355
+    ymin: 1398
+  2-1103:
+    col: 3
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1103
+    false_easting: -197498
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1103
+    xmax: 99144
+    xmin: 2183
+    ymax: 21328
+    ymin: 1322
+  2-1104:
+    col: 4
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1104
+    false_easting: -296247
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1104
+    xmax: 99802
+    xmin: 2268
+    ymax: 21384
+    ymin: 1465
+  2-1105:
+    col: 5
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1105
+    false_easting: -394996
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1105
+    xmax: 96320
+    xmin: 2095
+    ymax: 21277
+    ymin: 1357
+  2-1106:
+    col: 6
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1106
+    false_easting: -493745
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1106
+    xmax: 99490
+    xmin: 2486
+    ymax: 21347
+    ymin: 1219
+  2-1107:
+    col: 7
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1107
+    false_easting: -592494
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1107
+    xmax: 97304
+    xmin: 2134
+    ymax: 20698
+    ymin: 2059
+  2-1108:
+    col: 8
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1108
+    false_easting: -691243
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1108
+    xmax: 100427
+    xmin: 4049
+    ymax: 21121
+    ymin: 1781
+  2-1109:
+    col: 9
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1109
+    false_easting: -789992
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1109
+    xmax: 100649
+    xmin: 2552
+    ymax: 21336
+    ymin: 2185
+  2-1110:
+    col: 10
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1110
+    false_easting: -888741
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1110
+    xmax: 100771
+    xmin: 3539
+    ymax: 21290
+    ymin: 2689
+  2-1111:
+    col: 11
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1111
+    false_easting: -987490
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1111
+    xmax: 100642
+    xmin: 2636
+    ymax: 21277
+    ymin: 1324
+  2-1112:
+    col: 12
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1112
+    false_easting: -1086239
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1112
+    xmax: 99201
+    xmin: 2509
+    ymax: 21309
+    ymin: 1622
+  2-1113:
+    col: 13
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1113
+    false_easting: -1184988
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1113
+    xmax: 98368
+    xmin: 2258
+    ymax: 21076
+    ymin: 1169
+  2-1114:
+    col: 14
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1114
+    false_easting: -1283737
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1114
+    xmax: 99765
+    xmin: 2205
+    ymax: 21338
+    ymin: 1216
+  2-1115:
+    col: 15
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1115
+    false_easting: -1382486
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1115
+    xmax: 100734
+    xmin: 2400
+    ymax: 20742
+    ymin: 1188
+  2-1116:
+    col: 16
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1116
+    false_easting: -1481235
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 1116
+    xmax: 93098
+    xmin: 2049
+    ymax: 21266
+    ymin: 1222
+  2-1201:
+    col: 1
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1201
+    false_easting: 0
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1201
+    xmax: 100275
+    xmin: 4155
+    ymax: 21408
+    ymin: 1133
+  2-1202:
+    col: 2
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1202
+    false_easting: -98749
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1202
+    xmax: 100445
+    xmin: 2710
+    ymax: 21340
+    ymin: 1285
+  2-1203:
+    col: 3
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1203
+    false_easting: -197498
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1203
+    xmax: 100485
+    xmin: 2401
+    ymax: 21363
+    ymin: 1200
+  2-1204:
+    col: 4
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1204
+    false_easting: -296247
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1204
+    xmax: 97699
+    xmin: 2988
+    ymax: 21330
+    ymin: 1401
+  2-1205:
+    col: 5
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1205
+    false_easting: -394996
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1205
+    xmax: 100771
+    xmin: 4592
+    ymax: 19865
+    ymin: 1149
+  2-1206:
+    col: 6
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1206
+    false_easting: -493745
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1206
+    xmax: 100714
+    xmin: 8129
+    ymax: 20499
+    ymin: 1292
+  2-1207:
+    col: 7
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1207
+    false_easting: -592494
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1207
+    xmax: 93987
+    xmin: 2371
+    ymax: 21335
+    ymin: 1338
+  2-1208:
+    col: 8
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1208
+    false_easting: -691243
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1208
+    xmax: 98039
+    xmin: 9416
+    ymax: 19278
+    ymin: 1264
+  2-1209:
+    col: 9
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1209
+    false_easting: -789992
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1209
+    xmax: 82443
+    xmin: 2222
+    ymax: 19602
+    ymin: 1349
+  2-1210:
+    col: 10
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1210
+    false_easting: -888741
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1210
+    xmax: 100458
+    xmin: 2506
+    ymax: 21243
+    ymin: 1232
+  2-1211:
+    col: 11
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1211
+    false_easting: -987490
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1211
+    xmax: 93860
+    xmin: 2126
+    ymax: 21062
+    ymin: 1405
+  2-1212:
+    col: 12
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1212
+    false_easting: -1086239
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1212
+    xmax: 98141
+    xmin: 20300
+    ymax: 19951
+    ymin: 1393
+  2-1213:
+    col: 13
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1213
+    false_easting: -1184988
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1213
+    xmax: 99669
+    xmin: 2055
+    ymax: 20354
+    ymin: 2386
+  2-1214:
+    col: 14
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1214
+    false_easting: -1283737
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1214
+    xmax: 100308
+    xmin: 2530
+    ymax: 21379
+    ymin: 1260
+  2-1215:
+    col: 15
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1215
+    false_easting: -1382486
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1215
+    xmax: 100527
+    xmin: 2069
+    ymax: 21289
+    ymin: 1111
+  2-1216:
+    col: 16
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/1216
+    false_easting: -1481235
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 1216
+    xmax: 100095
+    xmin: 2270
+    ymax: 21246
+    ymin: 1421
+  2-2101:
+    col: 17
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2101
+    false_easting: -1579984
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2101
+    xmax: 100779
+    xmin: 2035
+    ymax: 21401
+    ymin: 1190
+  2-2102:
+    col: 18
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2102
+    false_easting: -1678733
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2102
+    xmax: 100779
+    xmin: 2033
+    ymax: 21400
+    ymin: 1186
+  2-2103:
+    col: 19
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2103
+    false_easting: -1777482
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2103
+    xmax: 100774
+    xmin: 2033
+    ymax: 21399
+    ymin: 1184
+  2-2104:
+    col: 20
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2104
+    false_easting: -1876231
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2104
+    xmax: 100779
+    xmin: 2032
+    ymax: 21397
+    ymin: 1181
+  2-2105:
+    col: 21
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2105
+    false_easting: -1974980
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2105
+    xmax: 100777
+    xmin: 2034
+    ymax: 21396
+    ymin: 1181
+  2-2106:
+    col: 22
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2106
+    false_easting: -2073729
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2106
+    xmax: 100772
+    xmin: 2034
+    ymax: 21390
+    ymin: 1175
+  2-2107:
+    col: 23
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2107
+    false_easting: -2172478
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2107
+    xmax: 100775
+    xmin: 2039
+    ymax: 21391
+    ymin: 1177
+  2-2108:
+    col: 24
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2108
+    false_easting: -2271227
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2108
+    xmax: 100776
+    xmin: 2034
+    ymax: 21389
+    ymin: 1168
+  2-2109:
+    col: 25
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2109
+    false_easting: -2369976
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2109
+    xmax: 100773
+    xmin: 2032
+    ymax: 21386
+    ymin: 1164
+  2-2110:
+    col: 26
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2110
+    false_easting: -2468725
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2110
+    xmax: 100772
+    xmin: 2030
+    ymax: 21379
+    ymin: 1164
+  2-2111:
+    col: 27
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2111
+    false_easting: -2567474
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2111
+    xmax: 100771
+    xmin: 2033
+    ymax: 21381
+    ymin: 1157
+  2-2112:
+    col: 28
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2112
+    false_easting: -2666223
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2112
+    xmax: 100768
+    xmin: 2034
+    ymax: 21377
+    ymin: 1152
+  2-2113:
+    col: 29
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2113
+    false_easting: -2764972
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2113
+    xmax: 100764
+    xmin: 2030
+    ymax: 21379
+    ymin: 1146
+  2-2114:
+    col: 30
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2114
+    false_easting: -2863721
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2114
+    xmax: 100766
+    xmin: 2030
+    ymax: 21376
+    ymin: 1145
+  2-2115:
+    col: 31
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2115
+    false_easting: -2962470
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2115
+    xmax: 100769
+    xmin: 2044
+    ymax: 21376
+    ymin: 1142
+  2-2116:
+    col: 32
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2116
+    false_easting: -3061219
+    false_northing: 0
+    lane_id: 2
+    row: 4
+    tile_id: 2116
+    xmax: 97296
+    xmin: 2031
+    ymax: 21373
+    ymin: 1139
+  2-2201:
+    col: 17
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2201
+    false_easting: -1579984
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2201
+    xmax: 100781
+    xmin: 2032
+    ymax: 21402
+    ymin: 1129
+  2-2202:
+    col: 18
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2202
+    false_easting: -1678733
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2202
+    xmax: 100780
+    xmin: 2033
+    ymax: 21400
+    ymin: 1126
+  2-2203:
+    col: 19
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2203
+    false_easting: -1777482
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2203
+    xmax: 100777
+    xmin: 2035
+    ymax: 21400
+    ymin: 1122
+  2-2204:
+    col: 20
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2204
+    false_easting: -1876231
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2204
+    xmax: 100780
+    xmin: 2038
+    ymax: 21398
+    ymin: 1121
+  2-2205:
+    col: 21
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2205
+    false_easting: -1974980
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2205
+    xmax: 100779
+    xmin: 2034
+    ymax: 21394
+    ymin: 1118
+  2-2206:
+    col: 22
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2206
+    false_easting: -2073729
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2206
+    xmax: 100780
+    xmin: 2033
+    ymax: 21392
+    ymin: 1115
+  2-2207:
+    col: 23
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2207
+    false_easting: -2172478
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2207
+    xmax: 100773
+    xmin: 2034
+    ymax: 21389
+    ymin: 1111
+  2-2208:
+    col: 24
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2208
+    false_easting: -2271227
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2208
+    xmax: 100776
+    xmin: 2035
+    ymax: 21391
+    ymin: 1105
+  2-2209:
+    col: 25
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2209
+    false_easting: -2369976
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2209
+    xmax: 100775
+    xmin: 2032
+    ymax: 21388
+    ymin: 1101
+  2-2210:
+    col: 26
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2210
+    false_easting: -2468725
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2210
+    xmax: 100773
+    xmin: 2034
+    ymax: 21381
+    ymin: 1097
+  2-2211:
+    col: 27
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2211
+    false_easting: -2567474
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2211
+    xmax: 100752
+    xmin: 2030
+    ymax: 21380
+    ymin: 1093
+  2-2212:
+    col: 28
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2212
+    false_easting: -2666223
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2212
+    xmax: 100770
+    xmin: 2033
+    ymax: 21378
+    ymin: 1087
+  2-2213:
+    col: 29
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2213
+    false_easting: -2764972
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2213
+    xmax: 100771
+    xmin: 2031
+    ymax: 21376
+    ymin: 1084
+  2-2214:
+    col: 30
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2214
+    false_easting: -2863721
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2214
+    xmax: 100770
+    xmin: 2030
+    ymax: 21379
+    ymin: 1080
+  2-2215:
+    col: 31
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2215
+    false_easting: -2962470
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2215
+    xmax: 100771
+    xmin: 2030
+    ymax: 21375
+    ymin: 1079
+  2-2216:
+    col: 32
+    data_dir: /scratch/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb/2/2216
+    false_easting: -3061219
+    false_northing: -20299
+    lane_id: 2
+    row: 3
+    tile_id: 2216
+    xmax: 99960
+    xmin: 2030
+    ymax: 21375
+    ymin: 1080
