@@ -2,6 +2,7 @@ import io
 
 import pytest
 import pandas as pd
+import numpy as np
 import geopandas as gpd
 
 from cart import (
@@ -22,7 +23,9 @@ from cart.meta import (
     # get_extent,
     read_layout,
 )
-
+from cart.split import (
+    _extract_genes
+)
 
 @pytest.fixture
 def features():
@@ -107,9 +110,24 @@ def test_matrix2gdf(matrix, barcodes, features):
     # assert (xmin, ymin, xmax, ymax) == (1,1,4,3)
 
 
-def test_read_layout():
-    df = read_layout('hiseq')
-    print(df)
-    print(df.loc[(2, 2112)].row)
+# def test_read_layout():
+#     df = read_layout('hiseq')
+#     print(df)
+#     print(df.loc[(2, 2112)].row)
 
 
+# def test_index_genes():
+#     df_all = pd.read_csv("~/data/seqscope/hd30-hml22-incol/merged.csv")
+#     df = df_all['gene_name'].value_counts().reset_index()   # type: ignore
+#     df.columns = ['gene_name', 'count']
+#     df['cum_percent'] = (df['count'].cumsum() / df['count'].sum())
+#  
+#     df.to_csv("~/data/seqscope/hd30-hml22-incol/count.csv")
+#     print(df.head())
+
+
+# def test_extract_genes():
+#     data_dir = "~/data/seqscope/hd30-hml22-incol/"  
+#     src_fgb = data_dir + "merged.fgb"
+#     dst_csv = data_dir + "merged_.csv"
+#     command = _extract_genes(src_fgb, dst_csv) 
