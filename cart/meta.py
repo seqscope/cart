@@ -91,6 +91,7 @@ def sdge_to_gcs(lane_id, tile_id, x, y, **kwargs):
 
 
 def identify_tile_size(data_dir, lane_id):
+    metadata_tiles = {} 
     tiles = extract_metadata_tiles(data_dir, lane_arg=lane_id)
     width_max, height_max = _identify_tile_size(tiles)
     return width_max, height_max
@@ -123,9 +124,11 @@ def extract_metadata_tiles(data_root, layout=None, lane_arg=0):
     if lane_arg != 0:
         lanes = [lane_arg]
     for lane in Path(data_root).iterdir():
+        if not lane.stem.isdigit(): continue
         if lane.is_dir() and (int(lane.stem) in lanes):
             for tile in lane.iterdir():
                 if tile.is_dir():
+                    if not tile.stem.isdigit(): continue
                     metadata_tiles[f"{lane.stem}-{tile.stem}"] =\
                         _metadata_tile(lane, tile, layout)
     return metadata_tiles
