@@ -5,7 +5,7 @@ tools for CartoSeq including metatdata generation, file converstion, and raster 
 ## set up
 
 ```
-pip install "git+https://github.com/seqscope/cart.git@latest"
+pip install "git+https://github.com/seqscope/cart.git@v0.1.2"
 ```
 
 ### for developers
