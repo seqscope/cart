@@ -1,6 +1,8 @@
 """ This module is used for generating metadata yaml for dataset"""
 
 import argparse
+import pkgutil
+import io
 from pathlib import Path
 
 import yaml
@@ -41,8 +43,8 @@ def main():
         'tiles': [],
     }
     layout = read_layout(args.layout)
-    tiles = extract_metadata_tiles(args.data_dir, layout, lane_arg=args.lane)
-    Tile.grid_width, Tile.grid_height = identify_tile_size(tiles)
+    tiles = extract_metadata_tiles(args.data_dir, layout=layout, lane_arg=args.lane)
+    Tile.grid_width, Tile.grid_height = _identify_tile_size(tiles)
     Tile.grid_gap = args.gap
     Tile.max_row = int(layout['row'].max())   # type: ignore
     print(f"Grid width: {Tile.grid_width}, height: {Tile.grid_height}")
@@ -67,7 +69,34 @@ def main():
         yaml.dump(metadata, file)
 
 
-def identify_tile_size(tiles):
+def sdge_to_gcs(lane_id, tile_id, x, y, **kwargs):
+    """
+    sdge_to_gcs(1, 1112, 123, 456, width=98749, height=20299, layout='hiseq')
+    """
+    grid_width = kwargs["width"]
+    grid_height = kwargs["height"]
+    layout  = read_layout(kwargs.get("layout", 'hiseq'))
+    max_row = int(layout['row'].max())  
+    
+    row = int(layout.loc[(lane_id, tile_id)].row)
+    col = int(layout.loc[(lane_id, tile_id)].col)
+    
+    false_easting = -int(grid_width * (col - 1))
+    false_northing = -int( grid_height * (max_row - row))
+    
+    x_gcs = x - false_easting
+    y_gcs = y - false_northing
+    
+    return (x_gcs, y_gcs)
+
+
+def identify_tile_size(data_dir, lane_id):
+    tiles = extract_metadata_tiles(data_dir, lane_arg=lane_id)
+    width_max, height_max = _identify_tile_size(tiles)
+    return width_max, height_max
+
+
+def _identify_tile_size(tiles):
     ''' 
     infer tile width and height
     width = max(xmax-xmin)
@@ -87,8 +116,8 @@ def identify_tile_size(tiles):
     return width_max, height_max
 
 
-def extract_metadata_tiles(data_root, layout, lane_arg=0):
-    ''' loop over data dir and append metadat for each tile'''
+def extract_metadata_tiles(data_root, layout=None, lane_arg=0):
+    ''' loop over data dir and append metadata for each tile'''
     metadata_tiles = {} 
     lanes = [1, 2]
     if lane_arg != 0:
@@ -104,17 +133,19 @@ def extract_metadata_tiles(data_root, layout, lane_arg=0):
 
 def _metadata_tile(lane, tile, layout):
     tile = Tile(int(lane.stem), int(tile.stem), str(tile))
-    tile.get_rowcol(layout)
+    if layout:
+        tile.set_rowcol(layout)
     tile.get_extent()
     return tile
 
 
-def read_layout(layout='hiseq'):
+def read_layout(layout='hiseq') -> pd.DataFrame:
     ''' read layout tsv file which contains row/col info'''
-    layout_table = ''
+    layout_table = 'layout/hiseq_layout.tsv'  # default
     if layout=='hiseq':
-        layout_table = 'config/hiseq_layout.tsv'
-    return pd.read_csv(layout_table, sep='\t').set_index(['lane', 'tile'])  # type: ignore
+        layout_table = 'layout/hiseq_layout.tsv'
+    data = pkgutil.get_data(__package__, layout_table)
+    return pd.read_csv(io.BytesIO(data), sep='\t').set_index(['lane', 'tile'])  # type: ignore
 
 
 class Tile:
@@ -140,7 +171,7 @@ class Tile:
         self.ymax: int = 0
 
 
-    def get_rowcol(self, layout):
+    def set_rowcol(self, layout):
         """ get row/col of a tile"""
         self.row = int(layout.loc[(self.lane_id, self.tile_id)].row)
         self.col = int(layout.loc[(self.lane_id, self.tile_id)].col)
