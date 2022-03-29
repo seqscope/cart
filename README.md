@@ -18,6 +18,15 @@ $ poetry install
 $ meta
 ```
 
+## coordinate conversion
+from sDGE to GCS (Global Coordinate System)
+```
+>>> from cart import meta
+>>> w, h = meta.identify_tile_size("/gpfs/accounts/hmkang_root/hmkang0/shared_data/NGST-sDGE/HD30-inj-colon-comb", 2)
+>>> meta.sdge_to_gcs(1, 1112, 123, 456, width=w, height=h)
+(1086362, 41054)
+>>>
+```
 
 ## metadata generation
 
