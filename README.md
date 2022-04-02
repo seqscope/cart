@@ -97,3 +97,13 @@ generate vector tiles with tippecanoe
 ```
 $ tippecanoe  -o vectortile.mbtiles -z14 -Z9  -pd  -M 2000000 -O 1000000 input.geojson -s EPSG:3857
 ```
+
+Merge TIFF files with gdal_merge.py in GDAL package
+```
+find *_modified.tif -print0 | xargs -r0 gdal_merge.py -o histology.tif 
+```
+
+Create image tile pyramid with gdal2tile in GDAL package (zoom range between 6-15)
+```
+ gdal2tiles.py -z 6-15 --processes=8 histology.tif tile-histology
+```
