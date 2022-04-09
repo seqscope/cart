@@ -1,4 +1,6 @@
 import io
+from pathlib import Path
+import math
 
 import pytest
 import pandas as pd
@@ -25,6 +27,10 @@ from cart.meta import (
 )
 from cart.split import (
     _extract_genes
+)
+from cart.factor import (
+    read_centroid,
+    create_hexagon
 )
 
 @pytest.fixture
@@ -131,3 +137,22 @@ def test_matrix2gdf(matrix, barcodes, features):
 #     src_fgb = data_dir + "merged.fgb"
 #     dst_csv = data_dir + "merged_.csv"
 #     command = _extract_genes(src_fgb, dst_csv) 
+
+def test_read_hexagon():
+    data_dir = "/Users/yonghah/data/seqscope/hd30-hml22-incol/lda"
+    fit_result = "LDA_hexagon.nFactor_10.d_18.lane_2.2112_2113_2212_2213.fit_result.tsv" 
+    df = pd.DataFrame(pd.read_csv(Path(data_dir) / fit_result, sep="\t"))
+    false_easting = -2666223
+    false_northing = 0
+    scale = 80
+    radius = 80 * 2 / math.sqrt(3)
+    # x, y is swapped
+    df['x'] = df['Hex_center_y'] * scale - false_easting 
+    df['y'] = df['Hex_center_x'] * scale - false_northing 
+    print(df)
+    # df['geometry'] = df.apply(
+    #     lambda row: create_hexagon(radius, row.x, row.y), axis=1)
+    # gdf = gpd.GeoDataFrame(df, geometry=df['geometry']).set_crs('EPSG:3857')
+    # gdf.to_file(Path(data_dir) / "test_hex.gpkg")
+    # print(gdf)
+
