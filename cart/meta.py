@@ -65,7 +65,9 @@ def main():
         'grid_width': Tile.grid_width,
         'grid_height': Tile.grid_height
     }
-    with open(args.output, 'w') as file:
+    path = Path(args.output)
+    path.parents[0].mkdir(parents=True, exist_ok=True)
+    with open(path, 'w') as file:
         yaml.dump(metadata, file)
 
 
@@ -135,7 +137,7 @@ def extract_metadata_tiles(data_root, layout=None, lane_arg=0):
 
 def _metadata_tile(lane, tile, layout):
     tile = Tile(int(lane.stem), int(tile.stem), str(tile))
-    if layout:
+    if not layout.empty:
         tile.set_rowcol(layout)
     tile.get_extent()
     return tile
@@ -146,6 +148,7 @@ def read_layout(layout='hiseq') -> pd.DataFrame:
     layout_table = 'layout/hiseq_layout.tsv'  # default
     if layout=='hiseq':
         layout_table = 'layout/hiseq_layout.tsv'
+        print("hiseq")
     data = pkgutil.get_data(__package__, layout_table)
     return pd.read_csv(io.BytesIO(data), sep='\t').set_index(['lane', 'tile'])  # type: ignore
 

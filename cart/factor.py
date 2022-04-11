@@ -54,7 +54,7 @@ def main():
         scale=args.scale
     )
     gdf = xy_to_hexagon(df, args.radius, args.angle)
-    gdf.to_file(args.output)
+    gdf.to_file(args.output, layer='hexagon', driver="GPKG")
 
 
 def xy_to_hexagon(df, inner_radius, rotation=0):

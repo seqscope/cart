@@ -21,7 +21,7 @@ marker_sets:
     RBC: Hbb-bs, Hba-a1, Hba-a2
     B_cell: Igha, Igj, Igkc
     SM: Tagln, Actg2, Myl9, Tpm2, Cnn1, Acta2
-  HD30-HML22-InCol:
+  HD30-inj-colon-comb:
     Fibro: Col3a1
     Goblet: Zg16, Tff3,Clca3,Spink3
     EEC: Pyy,Insl5,ppy
