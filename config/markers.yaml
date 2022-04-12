@@ -31,3 +31,12 @@ marker_sets:
     Macro: Ctsb
     Injury: Sprr2a3,Lamc2,2010109I03Rik,Clu,F3,Anxa2,Anxa1
     Neuronal: Vip,Gal,Uchl1
+  HD13-HLJNG-L1:
+    TypeI: Tnnt1, Tnnc1, Tpm3, Atp2a2, Myh7, Myl2, Tnni1, Myl3
+    TypeIIa: Myh1
+    TypeIIx: Myh2
+    NMJ: Prkar1a, Cd24a
+    Fibroblasts: Gsn, Dcn, Fbn1
+    Macrophages: Cd74, H2-Ab1, H2-Aa, Retnla, Lyz2
+    Endothelial: Aqp1, Ptrf
+    Nuclear: Malat1, Neat1
