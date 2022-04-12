@@ -21,7 +21,7 @@ export DATASET=HD30-inj-colon-comb
 export CONTAINER=/home/yonghah/simg/gdal_alpine-normal-latest.sif
 export sdge_dir=/gpfs/accounts/hmkang_root/hmkang0/shared_data/NGST-sDGEvelo/HD30-inj-colon-comb
 export marker_yaml=/home/yonghah/repo/cart/config/markers.yaml
-export histology_path=/gpfs/accounts/hmkang_root/hmkang0/yonghah/HD30-inj-colon-comb/lane2/sample_tif/image-flipped/merged/merged.tif
+export histology_path=s3://seqscope-hist2sdge/hd30-inj-colon-comb/referenced/histology.tif
 export factor_result=/gpfs/accounts/hmkang_root/hmkang0/shared_data/tmp/LDA/HD30-inj-colon-comb/analysis/LDA_hexagon.nFactor_10.d_18.lane_2.2101_2102_2103_2104_2105_2106_2107_2108_2109_2110_2111_2112_2113_2114_2115_2116_2201_2202_2203_2204_2205_2206_2207_2208_2209_2210_2211_2212_2213_2214_2215_2216.fit_result.tsv.gz
 export x0=-1579984
 export output_dir=/home/yonghah/jobs/HD30-inj-colon-comb
@@ -72,16 +72,16 @@ $output_dir/vector/factor.gpkg \
 echo 'raster conversion'
 
 mkdir -p $output_dir/raster
+aws s3 cp $histology_path $output_dir/raster/histology.tif
 singularity exec $CONTAINER gdal2tiles.py -z 6-15 \
-$histology_path $output_dir/tile/raster-histology
-cp $histology_path $output_dir/raster/histology.tif
+$output_dir/raster/histology.tif $output_dir/tile/raster-histology
 
 singularity exec $CONTAINER gdal_rasterize -a cnt_total -add -l all -tr 30 30 \
 $output_dir/vector/full_sdge.fgb \
 $output_dir/raster/count_sdge.tif
 
 singularity exec $CONTAINER gdaldem hillshade -z 50 -compute_edges -alg Horn -igor \
-  $output_dir/raster/count_sdge.tif $output_dir/raster/hillshade.tif 
+  $output_dir/raster/count_sdge.tif $output_dir/raster/hillshade.tif
 
 singularity exec $CONTAINER gdal2tiles.py -z 6-15 \
 $output_dir/raster/hillshade.tif $output_dir/tile/raster-count
