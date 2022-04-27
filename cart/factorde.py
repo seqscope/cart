@@ -31,8 +31,8 @@ def conversion(input, output):
     # columns: gene, factor, Chi2, pval, FoldChange, gene_tot
     df = read_table(input)
     res_dict = _conversion(df)
-    with open(output) as f:
-        json.dump(res_dict, f)
+    with open(output, 'w') as f:
+        f.write(res_dict)
 
 
 def _conversion(df):
@@ -40,7 +40,7 @@ def _conversion(df):
         .sort_values(['factor','Chi2'], ascending=False)
         .groupby('factor')
         .apply(lambda x: x.to_dict(orient='records'))
-    ).to_json(indent = 2)
+    ).to_json(indent=2)
     return res
 
 
