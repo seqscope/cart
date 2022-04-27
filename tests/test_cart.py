@@ -1,6 +1,8 @@
 import io
+import json
 from pathlib import Path
 import math
+from cart import factorde
 
 import pytest
 import pandas as pd
@@ -31,6 +33,9 @@ from cart.split import (
 from cart.factor import (
     read_centroid,
     create_hexagon
+)
+from cart.factorde import (
+    _conversion,
 )
 
 @pytest.fixture
@@ -138,21 +143,41 @@ def test_matrix2gdf(matrix, barcodes, features):
 #     dst_csv = data_dir + "merged_.csv"
 #     command = _extract_genes(src_fgb, dst_csv) 
 
-def test_read_hexagon():
-    data_dir = "/Users/yonghah/data/seqscope/hd30-hml22-incol/lda"
-    fit_result = "LDA_hexagon.nFactor_10.d_18.lane_2.2112_2113_2212_2213.fit_result.tsv" 
-    df = pd.DataFrame(pd.read_csv(Path(data_dir) / fit_result, sep="\t"))
-    false_easting = -2666223
-    false_northing = 0
-    scale = 80
-    radius = 80 * 2 / math.sqrt(3)
-    # x, y is swapped
-    df['x'] = df['Hex_center_y'] * scale - false_easting 
-    df['y'] = df['Hex_center_x'] * scale - false_northing 
-    print(df)
-    # df['geometry'] = df.apply(
-    #     lambda row: create_hexagon(radius, row.x, row.y), axis=1)
-    # gdf = gpd.GeoDataFrame(df, geometry=df['geometry']).set_crs('EPSG:3857')
-    # gdf.to_file(Path(data_dir) / "test_hex.gpkg")
-    # print(gdf)
+# def test_read_hexagon():
+#     data_dir = "/Users/yonghah/data/seqscope/hd30-hml22-incol/lda"
+#     fit_result = "LDA_hexagon.nFactor_10.d_18.lane_2.2112_2113_2212_2213.fit_result.tsv" 
+#     df = pd.DataFrame(pd.read_csv(Path(data_dir) / fit_result, sep="\t"))
+#     false_easting = -2666223
+#     false_northing = 0
+#     scale = 80
+#     radius = 80 * 2 / math.sqrt(3)
+#     # x, y is swapped
+#     df['x'] = df['Hex_center_y'] * scale - false_easting 
+#     df['y'] = df['Hex_center_x'] * scale - false_northing 
+#     print(df)
+#     # df['geometry'] = df.apply(
+#     #     lambda row: create_hexagon(radius, row.x, row.y), axis=1)
+#     # gdf = gpd.GeoDataFrame(df, geometry=df['geometry']).set_crs('EPSG:3857')
+#     # gdf.to_file(Path(data_dir) / "test_hex.gpkg")
+#     # print(gdf)
 
+def test_factorde():
+    df = pd.DataFrame(
+        {
+            'factor': [0, 0, 1, 1, 1],
+            'gene': ['a', 'b', 'a', 'c', 'd'],
+            'Chi2': [5, 2, 3, 4, 5],
+            'pval': [.1, .2, .1, .01, .02],
+        }
+    )
+    res = _conversion(df)
+    ans = json.dumps({
+        '0':[
+            {'factor':0,'gene':'a','Chi2':5,'pval':0.1},
+            {'factor':0,'gene':'b','Chi2':2,'pval':0.2}],
+        '1':[
+            {'factor':1,'gene':'d','Chi2':5,'pval':0.02},
+            {'factor':1,'gene':'c','Chi2':4,'pval':0.01},
+            {'factor':1,'gene':'a','Chi2':3,'pval':0.1}]
+    }, indent=2, separators=(',', ':'))
+    assert res == ans
