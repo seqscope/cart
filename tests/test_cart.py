@@ -170,14 +170,15 @@ def test_factorde():
             'pval': [.1, .2, .1, .01, .02],
         }
     )
-    res = _conversion(df)
+    res = _conversion(df, topn=2)
     ans = json.dumps({
         '0':[
             {'factor':0,'gene':'a','Chi2':5,'pval':0.1},
             {'factor':0,'gene':'b','Chi2':2,'pval':0.2}],
         '1':[
             {'factor':1,'gene':'d','Chi2':5,'pval':0.02},
-            {'factor':1,'gene':'c','Chi2':4,'pval':0.01},
-            {'factor':1,'gene':'a','Chi2':3,'pval':0.1}]
+            {'factor':1,'gene':'c','Chi2':4,'pval':0.01}]
     }, indent=2, separators=(',', ':'))
+    print(res)
     assert res == ans
+
