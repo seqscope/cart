@@ -37,10 +37,10 @@ def main():
         "-y0", "--false-northing", type=int, default=0,
         help="false northing")
     parser.add_argument(
-        "-s", "--scale", type=int, default=80,
+        "-s", "--scale", type=float, default=80,
         help="scale multiplied to original xy")
     parser.add_argument(
-        "-r", "--radius", type=int, default=80,
+        "-r", "--radius", type=float, default=80,
         help="inner radius of hexagon")
     parser.add_argument(
         "-a", "--angle", type=int, default=0,
