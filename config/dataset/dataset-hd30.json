@@ -1,0 +1,290 @@
+{
+  "id": "hd30-inj-colon-comb",
+  "label": "HD30 - Injured Colon",
+  "bucket": "hd30-inj-colon-comb",
+  "initViewState": {
+    "lng": 24.8600,
+    "lat": 0.2006,
+    "zoom": 10.00
+  },
+  "background": {
+    "opacity": 0.5,
+    "bgColor": "#000000",
+    "layers": [
+      {
+        "id": "histology",
+        "label": "histology",
+        "host": "https://hd30-inj-colon-comb.s3.amazonaws.com",
+        "tileDir": "tile/raster-histology",
+        "display": true
+      },
+      {
+        "id": "hillshade",
+        "label": "sDGE count",
+        "host": "https://hd30-inj-colon-comb.s3.amazonaws.com",
+        "tileDir": "tile/raster-count",
+        "display": true
+      }
+    ]
+  },
+  "roi": {
+    "host": "https://hd30-inj-colon-comb.s3.amazonaws.com",
+    "fgbPath": "vector/full_sdge.fgb"
+  },
+  "marker": {
+    "host": "https://hd30-inj-colon-comb.s3.amazonaws.com",
+    "tileDir": "tile/vector-sdge",
+    "circleSize": 150,
+    "markers": [
+      {
+        "display": true,
+        "id": "B_cell",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Igha",
+            "display": true
+          },
+          {
+            "id": "Igj",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Colonocyte",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Saa1",
+            "display": true
+          },
+          {
+            "id": "Lypd8",
+            "display": true
+          },
+          {
+            "id": "Sepp1",
+            "display": true
+          },
+          {
+            "id": "Prdx6",
+            "display": true
+          },
+          {
+            "id": "Car4",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": true,
+        "id": "EEC",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Pyy",
+            "display": true
+          },
+          {
+            "id": "Insl5",
+            "display": true
+          },
+          {
+            "id": "ppy",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Fibro",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Col3a1",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Goblet",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Zg16",
+            "display": true
+          },
+          {
+            "id": " Tff3",
+            "display": true
+          },
+          {
+            "id": "Clca3",
+            "display": true
+          },
+          {
+            "id": "Spink3",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Injury",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Sprr2a3",
+            "display": true
+          },
+          {
+            "id": "Lamc2",
+            "display": true
+          },
+          {
+            "id": "2010109I03Rik",
+            "display": true
+          },
+          {
+            "id": "Clu",
+            "display": true
+          },
+          {
+            "id": "F3",
+            "display": true
+          },
+          {
+            "id": "Anxa2",
+            "display": true
+          },
+          {
+            "id": "Anxa1",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Macro",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Ctsb",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Neuronal",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Vip",
+            "display": true
+          },
+          {
+            "id": "Gal",
+            "display": true
+          },
+          {
+            "id": "Uchl1",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "SM",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Tagln",
+            "display": true
+          },
+          {
+            "id": "Acta2",
+            "display": true
+          },
+          {
+            "id": "Cnn1",
+            "display": true
+          },
+          {
+            "id": "Tpm2",
+            "display": true
+          },
+          {
+            "id": "Myl9",
+            "display": true
+          }
+        ]
+      }
+    ]
+  },
+  "factor": {
+    "id": "lda-10",
+    "label": "LDA 10 Factors",
+    "host": "https://hd30-inj-colon-comb.s3.amazonaws.com",
+    "tileDir": "tile/vector-factor",
+    "zScale": 0,
+    "zField": "Topic_0",
+    "colorField": "Top_Topic",
+    "opacity": 1.0,
+    "factors": [
+      {
+        "id": 0,
+        "label": "Topic_0",
+        "display": true
+      },
+      {
+        "id": 1,
+        "label": "Topic_1",
+        "display": true
+      },
+      {
+        "id": 2,
+        "label": "Topic_2",
+        "display": true
+      },
+      {
+        "id": 3,
+        "label": "Topic_3",
+        "display": true
+      },
+      {
+        "id": 4,
+        "label": "Topic_4",
+        "display": false
+      },
+      {
+        "id": 5,
+        "label": "Topic_5",
+        "display": true
+      },
+      {
+        "id": 6,
+        "label": "Topic_6",
+        "display": true
+      },
+      {
+        "id": 7,
+        "label": "Topic_7",
+        "display": true
+      },
+      {
+        "id": 8,
+        "label": "Topic_8",
+        "display": true
+      },
+      {
+        "id": 9,
+        "label": "Topic_9",
+        "display": true
+      }
+    ]
+  }
+}
