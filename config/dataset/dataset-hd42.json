@@ -1,0 +1,265 @@
+{
+  "id": "hd42-hnkwl-mouse-l2",
+  "label": "HD42",
+  "bucket": "hd42-hnkwl-mouse-l2",
+  "initViewState": {
+    "lng": 0.843000,
+    "lat": 0.009640,
+    "zoom": 15.0
+  },
+  "background": {
+    "opacity": 0.5,
+    "bgColor": "#000000",
+    "layers": [
+      {
+        "id": "histology",
+        "label": "histology",
+        "host": "https://hd42-hnkwl-mouse-l2.s3.amazonaws.com",
+        "tileDir": "tile/raster-histology",
+        "display": true
+      },
+      {
+        "id": "hillshade",
+        "label": "sDGE count",
+        "host": "https://hd42-hnkwl-mouse-l2.s3.amazonaws.com",
+        "tileDir": "tile/raster-count",
+        "display": true
+      }
+    ]
+  },
+  "roi": {
+    "host": "https://hd42-hnkwl-mouse-l2.s3.amazonaws.com",
+    "fgbPath": "vector/full_sdge.fgb"
+  },
+  "marker": {
+    "host": "https://hd42-hnkwl-mouse-l2.s3.amazonaws.com",
+    "tileDir": "tile/vector-sdge",
+    "circleSize": 150,
+    "markers": [
+      {
+        "display": true,
+        "id": "TypeI",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Tnnt1",
+            "display": true
+          },
+          {
+            "id": "Tnnc1",
+            "display": true
+          },
+          {
+            "id": "Tpm3",
+            "display": true
+          },
+          {
+            "id": "Atp2a2",
+            "display": true
+          },
+          {
+            "id": "Myh7",
+            "display": true
+          },
+          {
+            "id": "Myl2",
+            "display": true
+          },
+          {
+            "id": "Tnni1",
+            "display": true
+          },
+          {
+            "id": "Myl3",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "TypeIIa",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Myh1",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": true,
+        "id": "TypeIIx",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Myh2",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": true,
+        "id": "NMJ",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Prkarla",
+            "display": true
+          },
+          {
+            "id": "Cd24a",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Fibroblasts",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Gsn",
+            "display": true
+          },
+          {
+            "id": "Dcn",
+            "display": true
+          },
+          {
+            "id": "Fbn1",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Macrophages",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Cd74",
+            "display": true
+          },
+          {
+            "id": " H2-Ab1",
+            "display": true
+          },
+          {
+            "id": "H2-Aa",
+            "display": true
+          },
+          {
+            "id": "Retnla",
+            "display": true
+          },
+          {
+            "id": "Lyz2",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Endothelial",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Aqp1",
+            "display": true
+          },
+          {
+            "id": "Ptrf",
+            "display": true
+          }
+        ]
+      },
+      {
+        "display": false,
+        "id": "Nuclear",
+        "circleSize": 150,
+        "genes": [
+          {
+            "id": "Malat1",
+            "display": true
+          },
+          {
+            "id": "Neat1",
+            "display": true
+          }
+        ]
+      }
+    ]
+  },
+  "factor": {
+    "id": "lda-10",
+    "label": "LDA 10 Factors",
+    "host": "https://hd42-hnkwl-mouse-l2.s3.amazonaws.com",
+    "tileDir": "tile/vector-factor",
+    "zScale": 0,
+    "zField": "Topic_0",
+    "colorField": "Top_Topic",
+    "opacity": 1.0,
+    "factors": [
+      {
+        "id": 0,
+        "label": "Topic_0",
+        "display": true
+      },
+      {
+        "id": 1,
+        "label": "Topic_1",
+        "display": true
+      },
+      {
+        "id": 2,
+        "label": "Topic_2",
+        "display": true
+      },
+      {
+        "id": 3,
+        "label": "Topic_3",
+        "display": true
+      },
+      {
+        "id": 4,
+        "label": "Topic_4",
+        "display": true
+      },
+      {
+        "id": 5,
+        "label": "Topic_5",
+        "display": true
+      },
+      {
+        "id": 6,
+        "label": "Topic_6",
+        "display": true
+      },
+      {
+        "id": 7,
+        "label": "Topic_7",
+        "display": true
+      },
+      {
+        "id": 8,
+        "label": "Topic_8",
+        "display": true
+      },
+      {
+        "id": 9,
+        "label": "Topic_9",
+        "display": true
+      },
+      {
+        "id": 10,
+        "label": "Topic_10",
+        "display": true
+      },
+      {
+        "id": 11,
+        "label": "Topic_11",
+        "display": true
+      }
+    ]
+  }
+}
