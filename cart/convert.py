@@ -1,6 +1,8 @@
+# type: ignore
 import argparse
 import os
 from pathlib import Path
+import pandas as pd
 from multiprocessing import Pool
 import subprocess
 
@@ -17,24 +19,154 @@ from .util import (
 )
 
 def main():
+    ''' 
+    $ python -m cart.convert \
+    -i ~/data/seqscope/HD31-HMKYV-human-L2/sge \
+    -o ~/data/seqscope/HD31-HMKYV-human-L2/output/vector/test.tsv.gz
+    '''
     parser = argparse.ArgumentParser(description="Convert SeqScope data to geographic format")
+    parser.add_argument("-o", "--out", type=str, required=True, help="Output file")
     parser.add_argument(
-        "-o", "--out", type=str, required=True,
-        help="Output dir")
-    parser.add_argument(
-        "-m", "--meta", type=str, default='metadata.yaml',
-        help="Output dir")
-    parser.add_argument(
-        "-c", "--cpu", type=int, default=6,
-        help="number of processes") 
+        "-i", "--input", type=str, required=True,
+        help="input data dir")
     args = parser.parse_args()
-    with open(args.meta) as f:
-        metadata = yaml.safe_load(f)  
-    tiles = list(metadata['tiles'].keys())
-    args_list = map(lambda t: (t, args.out, metadata),tiles)
+    output_path = Path(args.out)
+    output_path.parents[0].mkdir(parents=True, exist_ok=True)
+    data_dir = Path(args.input)
+    features = data_dir / "features.tsv.gz"
+    barcodes = data_dir / "barcodes.tsv.gz"
+    manifest = data_dir / "manifest.tsv"
+    matrix   = data_dir / "matrix.mtx.gz"
+    print(args) 
+    convert(
+        barcodes,
+        matrix,
+        features,
+        manifest,
+        output_path
+    )
+
+    # convert(args.input, args.out)
+
+
+def convert(
+    barcode_path, 
+    matrix_path, 
+    feature_path, 
+    manifest_path, 
+    output_path):
     
-    with Pool(args.cpu) as p:
-        p.starmap(convert_single, args_list)
+    ''' 
+    read three tables and the matching manifest; 
+    join and add global coordinates; 
+    then save the joined output as tsv.gz
+    ''' 
+    
+    # read barcodes
+    df_b = pd.read_csv(
+        barcode_path, 
+        sep="\t",
+        names=[
+            'barcode', 'barcode_id', 'col1', 
+            'lane', 'tile',
+            'y_', 'x_', 'counts'],
+        dtype = {
+            'barcode': str,
+            'barcode_id': 'int32',
+            'y_': 'int32',
+            'x_': 'int32',
+        }
+    )
+    
+    # read manifest
+    manifest = pd.read_csv(manifest_path, sep="\t").set_index('id')  
+    manifest['width'] = manifest['ymax'] - manifest['ymin']
+    manifest['height'] = manifest['xmax'] - manifest['xmin']
+    grid_width = manifest.width.max()    # tile grid width
+    grid_height = manifest.height.max()  # tile grid height
+    
+    # add global coordinates
+    df_b = lc2gc(df_b, grid_width, grid_height, manifest)
+    
+    # read matrix 
+    df_m = pd.read_csv(matrix_path, sep=" ", skiprows=3,
+        names = [
+            'gene_id', 'barcode_id', 
+            'Gene', 'GeneFull', 
+            'VelocytoSpliced', 'VelocytoUnspliced', 
+            'VelocytoAmbiguous'],
+        dtype= {
+            'gene_id': 'int32',
+            'barcode_id': 'int32',
+            'Gene': 'int8',
+            'GeneFull': 'int8',
+            'VelocytoSpliced': 'int8', 
+            'VelocytoUnspliced': 'int8',
+            'VelocytoAmbiguous': 'int8'
+        }
+    )
+    
+    # read gene table
+    df_g = pd.read_csv(feature_path, sep="\t",
+        names = ['name', 'gene_name', 'gene_id',  'counts'],
+        dtype = {
+            'name': str,
+            'gene_name': str,
+            'gene_id': 'int32',
+            'counts': str
+        }
+    ).set_index('gene_id')[['gene_name']]
+    
+    # join coords and gene_name to matrix
+    df_merged = (df_m
+        .merge(df_b, on='barcode_id')
+        .merge(df_g, on='gene_id')
+    ).drop(['gene_id', 'barcode_id'], axis=1)
+    
+    # add total count
+    df_merged['cnt_total'] =  \
+        df_merged['Gene'] +\
+        df_merged['GeneFull'] +\
+        df_merged['VelocytoSpliced'] +\
+        df_merged['VelocytoUnspliced'] +\
+        df_merged['VelocytoAmbiguous']
+    
+    # save output
+    df_merged.to_csv(
+        output_path, 
+        sep="\t", 
+        index=False,
+        compression='gzip'
+    )
+    print(f"Table with {len(df_merged)} rows saved at {output_path}")
+    
+    # for future use
+    return df_merged
+
+
+def lc2gc(df, grid_width, grid_height, manifest):
+    ''' 
+    add global coordinates to barcode dataframe 
+    '''
+    um_to_sge = 26.67 
+    p = df['tile'] // 1000                 # first digit of tile number 
+    q = (df['tile']  - p  * 1000) // 100   # second digit
+    k = df['tile'] - p * 1000 - q * 100    # last two digits
+    df['m'] = (p - 1) * 16 + k             # row number of tile from the bottom
+    df['n'] = 2 * (2- df['lane']) + q      # col number of tile from the left
+    
+    # add xmin, ymin of a tile from manifest
+    df = df.assign(
+        tile_id=df.lane.map(str) + "_" + df.tile.map(str)
+    ).set_index('tile_id')
+    df = df.join(manifest[['xmin', 'ymin']])
+    
+    # global coords
+    df['x'] = (df.x_ + grid_width  * (df.m-1) - df.ymin) / um_to_sge  # note that xmin, ymin came from manifest
+    df['y'] = (df.y_ + grid_height * (df.n-1) - df.xmin ) / um_to_sge  # where x, y flipped
+    
+    df = df[['barcode_id',  'x', 'y']].set_index('barcode_id')
+    return df
 
 
 def convert_single(lt_id, outdir, metadata):
@@ -59,8 +191,8 @@ def convert_single(lt_id, outdir, metadata):
         t_srs=t_srs)
 
 
-def convert2gpkg(matrix, barcodes, features, output: str, t_srs: str):
-    '''convert dataset to gpkg'''
+def convert2gpkg(matrix, barcodes, features, output: str, t_srs: str, driver='GPKG'):
+    '''convert dataset to gpkg or fgb'''
     gdf = matrix2gdf(matrix, barcodes, features, t_srs)
     gdf = gdf.drop(['barcode_id', 'gene_id'], axis=1)
     schema = gpd.io.file.infer_schema(gdf)  # type: ignore
