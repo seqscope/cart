@@ -72,7 +72,7 @@ def convert(
             'y_', 'x_', 'counts'],
         dtype = {
             'barcode': str,
-            'barcode_id': 'int32',
+            'barcode_id': 'int',
             'y_': 'int32',
             'x_': 'int32',
         }
@@ -97,7 +97,7 @@ def convert(
             'VelocytoAmbiguous'],
         dtype= {
             'gene_id': 'int32',
-            'barcode_id': 'int32',
+            'barcode_id': 'int',
             'Gene': 'int8',
             'GeneFull': 'int8',
             'VelocytoSpliced': 'int8', 
